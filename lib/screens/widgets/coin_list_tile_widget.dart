@@ -10,67 +10,70 @@ class CoinListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Image.network(
-            coin.image,
-            height: 48,
-          ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              coin.name,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                  ),
-            ),
-            Text(
-              coin.symbol.toUpperCase(),
-              style: Theme.of(context).textTheme.labelMedium,
-            )
-          ],
-        ),
-        Expanded(
-          child: Padding(
+    return InkWell(
+      onTap: () {},
+      child: Row(
+        children: [
+          Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  formatCurrency.format(coin.currentPrice),
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      coin.priceChangePercentage24H >= 0
-                          ? Icons.arrow_upward_rounded
-                          : Icons.arrow_downward_rounded,
-                      color: coin.priceChangePercentage24H >= 0
-                          ? Colors.green
-                          : Colors.red,
-                      size: 14,
+            child: Image.network(
+              coin.image,
+              height: 48,
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                coin.name,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
-                    Text(
-                      coin.priceChangePercentage24H.abs().toStringAsFixed(2) +
-                          "%",
-                      style: TextStyle(
+              ),
+              Text(
+                coin.symbol.toUpperCase(),
+                style: Theme.of(context).textTheme.labelMedium,
+              )
+            ],
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    formatCurrency.format(coin.currentPrice),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        coin.priceChangePercentage24H >= 0
+                            ? Icons.arrow_upward_rounded
+                            : Icons.arrow_downward_rounded,
                         color: coin.priceChangePercentage24H >= 0
                             ? Colors.green
                             : Colors.red,
+                        size: 14,
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      Text(
+                        coin.priceChangePercentage24H.abs().toStringAsFixed(2) +
+                            "%",
+                        style: TextStyle(
+                          color: coin.priceChangePercentage24H >= 0
+                              ? Colors.green
+                              : Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
