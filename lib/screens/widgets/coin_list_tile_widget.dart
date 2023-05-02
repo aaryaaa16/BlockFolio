@@ -6,7 +6,7 @@ class CoinListTile extends StatelessWidget {
   CoinListTile({super.key, required this.coin});
 
   Coin coin;
-  final formatCurrency = new NumberFormat.simpleCurrency();
+  final formatCurrency = NumberFormat.simpleCurrency();
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +24,13 @@ class CoinListTile extends StatelessWidget {
           children: [
             Text(
               coin.name,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  ),
             ),
             Text(
               coin.symbol.toUpperCase(),
+              style: Theme.of(context).textTheme.labelMedium,
             )
           ],
         ),
@@ -61,11 +65,11 @@ class CoinListTile extends StatelessWidget {
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),
-        )
+        ),
       ],
     );
   }
