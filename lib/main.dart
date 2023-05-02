@@ -1,4 +1,5 @@
 import 'package:block_folio/screens/home_page.dart';
+import 'package:block_folio/themes/color_scheme.dart';
 import 'package:block_folio/view_models/coins_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +23,12 @@ class BlockfolioApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          colorScheme: lightColorScheme,
+          useMaterial3: true,
+        ),
+        darkTheme: ThemeData(
+          colorScheme: darkColorScheme,
+          useMaterial3: true,
         ),
         home: const HomePage(),
       ),

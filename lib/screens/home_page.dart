@@ -13,14 +13,18 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Blockfolio'),
+        elevation: 2,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
+          children: <Widget>[
             Text(
               'Welcome to Blockfolio',
             ),
+            Text("We have ${coinsVM.coins.length} coins"),
+            if (coinsVM.isLoading)
+              Text("Loading"),
           ],
         ),
       ),
