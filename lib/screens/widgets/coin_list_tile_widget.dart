@@ -10,66 +10,80 @@ class CoinListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Image.network(
-            coin.image,
-            height: 48,
-          ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        Row(
           children: [
-            Text(
-              coin.name,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                  ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.network(
+                coin.image,
+                height: 48,
+                width: 48,
+              ),
             ),
-            Text(
-              coin.symbol.toUpperCase(),
-              style: Theme.of(context).textTheme.labelMedium,
-            )
-          ],
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  formatCurrency.format(coin.currentPrice),
+                  coin.name,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      ),
                 ),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
+                Text(
+                  coin.symbol.toUpperCase(),
+                  style: Theme.of(context).textTheme.labelMedium,
+                )
+              ],
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Icon(
-                      coin.priceChangePercentage24H >= 0
-                          ? Icons.arrow_upward_rounded
-                          : Icons.arrow_downward_rounded,
-                      color: coin.priceChangePercentage24H >= 0
-                          ? Colors.green
-                          : Colors.red,
-                      size: 14,
-                    ),
                     Text(
-                      coin.priceChangePercentage24H.abs().toStringAsFixed(2) +
-                          "%",
+                      formatCurrency.format(coin.currentPrice),
                       style: TextStyle(
                         color: coin.priceChangePercentage24H >= 0
                             ? Colors.green
                             : Colors.red,
                       ),
                     ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          coin.priceChangePercentage24H >= 0
+                              ? Icons.arrow_upward_rounded
+                              : Icons.arrow_downward_rounded,
+                          color: coin.priceChangePercentage24H >= 0
+                              ? Colors.green
+                              : Colors.red,
+                          size: 14,
+                        ),
+                        Text(
+                          coin.priceChangePercentage24H.abs().toStringAsFixed(2) +
+                              "%",
+                          style: TextStyle(
+                            color: coin.priceChangePercentage24H >= 0
+                                ? Colors.green
+                                : Colors.red,
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
+        Divider(
+          indent: 15,
+          endIndent: 15,
+        )
       ],
     );
   }
