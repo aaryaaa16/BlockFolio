@@ -1,4 +1,5 @@
 import 'package:block_folio/models/coin.dart';
+import 'package:block_folio/screens/widgets/small_sparkline_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -10,11 +11,12 @@ class CoinListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      child: Column(
-        children: [
-          Row(
+    return Column(
+      children: [
+        InkWell(
+          onTap: () {},
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -43,55 +45,66 @@ class CoinListTile extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        formatCurrency.format(coin.currentPrice),
-                        style: TextStyle(
-                          color: coin.priceChangePercentage24H >= 0
-                              ? Colors.green
-                              : Colors.red,
-                          fontSize: 14,
-                        ),
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Icon(
-                            coin.priceChangePercentage24H >= 0
-                                ? Icons.arrow_upward_rounded
-                                : Icons.arrow_downward_rounded,
-                            color: coin.priceChangePercentage24H >= 0
-                                ? Colors.green
-                                : Colors.red,
-                            size: 14,
-                          ),
                           Text(
-                            coin.priceChangePercentage24H
-                                    .abs()
-                                    .toStringAsFixed(2) +
-                                "%",
+                            formatCurrency.format(coin.currentPrice),
                             style: TextStyle(
                               color: coin.priceChangePercentage24H >= 0
                                   ? Colors.green
                                   : Colors.red,
+                              fontSize: 14,
                             ),
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                coin.priceChangePercentage24H >= 0
+                                    ? Icons.arrow_upward_rounded
+                                    : Icons.arrow_downward_rounded,
+                                color: coin.priceChangePercentage24H >= 0
+                                    ? Colors.green
+                                    : Colors.red,
+                                size: 14,
+                              ),
+                              Text(
+                                coin.priceChangePercentage24H
+                                        .abs()
+                                        .toStringAsFixed(2) +
+                                    "%",
+                                style: TextStyle(
+                                  color: coin.priceChangePercentage24H >= 0
+                                      ? Colors.green
+                                      : Colors.red,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
+                      Container(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          height: 48,
+                          width: 96,
+                          child: SmallSparkline(sparkline: coin.sparkline)),
                     ],
                   ),
                 ),
               ),
             ],
           ),
-          Divider(
-            indent: 15,
-            endIndent: 15,
-          )
-        ],
-      ),
+        ),
+        Divider(
+          indent: 15,
+          endIndent: 15,
+        )
+      ],
     );
   }
 }
