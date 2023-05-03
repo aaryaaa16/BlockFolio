@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "974804124846",
+    "project_id": "laxmiauto-a9a59",
+    "storage_bucket": "laxmiauto-a9a59.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:974804124846:android:a495d439997a045644d93f",
+        "android_client_info": {
+          "package_name": "com.example.block_folio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "974804124846-icjmc4mr6fcqc7g8c2umi4ekijv3ch71.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLiwB_hYrkJGy4wwaLMo585pV0czovC7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "974804124846-icjmc4mr6fcqc7g8c2umi4ekijv3ch71.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
