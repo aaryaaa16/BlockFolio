@@ -1,4 +1,5 @@
 import 'package:block_folio/models/coin.dart';
+import 'package:block_folio/models/coin_detail.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -22,5 +23,23 @@ class CoinGecko {
       coins.add(Coin.fromJson(coin));
     }
     return coins;
+  }
+
+  Future<CoinDetail> getCoinDetail(String id) async {
+    String finalURL = baseURL + "coins/" + id;
+    Map<String, String> queryArguments = {
+      "localization": "false",
+      "tickers": "false",
+      "market_data": "true",
+      "community_data": "false",
+      "developer_data": "false",
+      "sparkline": "false",
+    };
+    Uri uri = Uri.parse(finalURL).replace(queryParameters: queryArguments);
+    final resopnse = await http.get(uri);
+    var responseData = json.decode(resopnse.body);
+    CoinDetail coin = CoinDetail.fromJson(responseData);
+    print(coin.id);
+    return coin;
   }
 }

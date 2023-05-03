@@ -1,7 +1,9 @@
 import 'package:block_folio/models/coin.dart';
 import 'package:block_folio/screens/widgets/small_sparkline_widget.dart';
+import 'package:block_folio/view_models/coins_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class CoinListTile extends StatelessWidget {
   CoinListTile({super.key, required this.coin});
@@ -11,10 +13,13 @@ class CoinListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final coinsVM = Provider.of<CoinsViewModel>(context, listen: false);
     return Column(
       children: [
         InkWell(
-          onTap: () {},
+          onTap: () async {
+            coinsVM.coinGecko.getCoinDetail(coin.id);
+          },
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [

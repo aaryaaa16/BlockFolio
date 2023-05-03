@@ -3,7 +3,7 @@ import 'package:block_folio/services/coin_gecko.dart';
 import 'package:flutter/material.dart';
 
 class CoinsViewModel with ChangeNotifier {
-  CoinGecko _coinGecko = CoinGecko();
+  CoinGecko coinGecko = CoinGecko();
   bool isLoading = false;
   List<Coin> coins = [];
   CoinsViewModel() {
@@ -13,7 +13,7 @@ class CoinsViewModel with ChangeNotifier {
   Future<void> initialize() async {
     isLoading = true;
     notifyListeners();
-    coins = await _coinGecko.getCoins();
+    coins = await coinGecko.getCoins();
     isLoading = false;
     notifyListeners();
   }

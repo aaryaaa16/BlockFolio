@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
         elevation: 2,
       ),
       body: coinsVM.coins.isEmpty
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : SingleChildScrollView(
