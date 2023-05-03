@@ -19,6 +19,7 @@ class CoinListTile extends StatelessWidget {
             child: Image.network(
               coin.image,
               height: 48,
+              width: 48,
             ),
           ),
           Column(
