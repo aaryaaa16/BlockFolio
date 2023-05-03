@@ -26,6 +26,7 @@ class BlockfolioApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: lightColorScheme,
           useMaterial3: true,
