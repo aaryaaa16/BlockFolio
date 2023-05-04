@@ -322,12 +322,14 @@ class CoinDetail extends StatelessWidget {
         ],
       ),
     );
-    return Column(
-      children: [
-        header(),
-        graph(),
-        footer()
-      ],
+    return Scaffold(
+      body: Column(
+        children: [
+          header(),
+          graph(),
+          footer()
+        ],
+      ),
     );
   }
 }
