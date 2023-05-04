@@ -18,8 +18,7 @@ class CoinListTile extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            coinsVM.coinGecko.getCoinDetail(coin.id);
-            coinsVM.coinGecko.getCoinGraphData(coin.id, '3');
+            coinsVM.coinGecko.getCoinDetail(coin.id); 
           },
           child: Row(
             mainAxisSize: MainAxisSize.max,
