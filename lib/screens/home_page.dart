@@ -3,6 +3,7 @@ import 'package:block_folio/screens/widgets/coin_list_tile_widget.dart';
 import 'package:block_folio/view_models/coins_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:block_folio/screens/coin_detail_screen.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -85,6 +86,17 @@ class HomePage extends StatelessWidget {
             )
           : Column(
               children: [
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CoinDetail())
+                      );
+                    },
+                  child: Text(
+                    'coinPage'
+                  ),
+                ),
                 Container(
                   child: Row(
                     children: [
