@@ -11,7 +11,7 @@ class CoinDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final coinsVM = Provider.of<CoinsViewModel>(context, listen: false);
+    final coinsVM = Provider.of<CoinsViewModel>(context);
 
     var microSeconds = 1683225493000;
     var date = new DateTime.fromMicrosecondsSinceEpoch(microSeconds);
@@ -94,11 +94,14 @@ class CoinDetailScreen extends StatelessWidget {
     ];
 
     Widget header() => Container(
-        height: 200,
-        width: 400,
-        child: Column(
-          children: [Text('')],
-        ));
+          height: 200,
+          width: 400,
+          child: Column(
+            children: [
+              Text(''),
+            ],
+          ),
+        );
     Widget footer() => Text('Footer');
     Widget graph() => Container(
           height: 300,
@@ -109,14 +112,16 @@ class CoinDetailScreen extends StatelessWidget {
                 dataSource: prices,
                 xValueMapper: (List<double> number, _) => number[0],
                 yValueMapper: (List<double> number, _) => number[1],
-              )
+              ),
             ],
           ),
         );
     return Scaffold(
-      body: Column(
-        children: [header(), graph(), footer()],
-      ),
+      body: coinsVM.isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Column(
+              children: [header(), graph(), footer()],
+            ),
     );
   }
 }
