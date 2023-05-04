@@ -1,3 +1,4 @@
+import 'package:block_folio/screens/coinInfo_page.dart';
 import 'package:block_folio/screens/home_page.dart';
 import 'package:block_folio/themes/color_scheme.dart';
 import 'package:block_folio/view_models/coins_viewmodel.dart';
@@ -20,6 +21,7 @@ class BlockfolioApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<CoinsViewModel>(create: (_) => CoinsViewModel()),
