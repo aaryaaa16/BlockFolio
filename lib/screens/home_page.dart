@@ -94,15 +94,13 @@ class HomePage extends StatelessWidget {
           : Column(
               children: [
                 ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
+                  onPressed: () {
+                    Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CoinDetail())
-                      );
-                    },
-                  child: Text(
-                    'coinPage'
-                  ),
+                        MaterialPageRoute(
+                            builder: (context) => CoinDetailScreen()));
+                  },
+                  child: Text('coinPage'),
                 ),
                 Container(
                   child: Row(

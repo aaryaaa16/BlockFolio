@@ -1,3 +1,4 @@
+import 'package:block_folio/models/coin_detail.dart';
 import 'package:block_folio/screens/coinInfo_page.dart';
 import 'package:block_folio/screens/home_page.dart';
 import 'package:block_folio/screens/registration_page.dart';
@@ -45,6 +46,7 @@ class BlockfolioApp extends StatelessWidget {
           '/': (context) => const HomePage(),
           '/profile': (context) => const ProfileScreen(),
           '/register': (context) => const RegistrationScreen(),
+          '/coinInfo': (context) => const CoinDetail(),
         },
         initialRoute: '/',
       ),

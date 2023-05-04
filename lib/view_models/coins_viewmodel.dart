@@ -11,6 +11,7 @@ class CoinsViewModel with ChangeNotifier {
   CoinDetail? currentCoin;
 
   void viewDetail(BuildContext context, String coinID) async {
+    
     currentCoin = await coinGecko.getCoinDetail(coinID);
     notifyListeners();
   }
