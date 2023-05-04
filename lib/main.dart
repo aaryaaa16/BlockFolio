@@ -1,10 +1,13 @@
 import 'package:block_folio/screens/home_page.dart';
+import 'package:block_folio/screens/registration_page.dart';
 import 'package:block_folio/themes/color_scheme.dart';
+import 'package:block_folio/view_models/auth_viewmodel.dart';
 import 'package:block_folio/view_models/coins_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'screens/profile_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +26,7 @@ class BlockfolioApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<CoinsViewModel>(create: (_) => CoinsViewModel()),
+        ChangeNotifierProvider<LoginViewModel>(create: (_) => LoginViewModel()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -35,7 +39,12 @@ class BlockfolioApp extends StatelessWidget {
           colorScheme: darkColorScheme,
           useMaterial3: true,
         ),
-        home: const HomePage(),
+        routes: {
+          '/': (context) => const HomePage(),
+          '/profile': (context) => const ProfileScreen(),
+          '/register': (context) => const RegistrationScreen(),
+        },
+        initialRoute: '/',
       ),
     );
   }

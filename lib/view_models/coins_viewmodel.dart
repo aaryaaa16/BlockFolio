@@ -4,10 +4,22 @@ import 'package:flutter/material.dart';
 
 class CoinsViewModel with ChangeNotifier {
   CoinGecko coinGecko = CoinGecko();
+  int pageNumber = 1;
   bool isLoading = false;
   List<Coin> coins = [];
   CoinsViewModel() {
     initialize();
+  }
+
+  void incrementPage() async {
+    if (pageNumber < 10) {
+      pageNumber++;
+      isLoading = true;
+      notifyListeners();
+      coins = await coinGecko.getCoins(pageNo: pageNumber.toString());
+      isLoading = false;
+      notifyListeners();
+    }
   }
 
   Future<void> initialize() async {

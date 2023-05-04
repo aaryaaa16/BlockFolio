@@ -1,5 +1,5 @@
-import 'package:block_folio/models/coin.dart';
 import 'package:block_folio/screens/widgets/coin_list_tile_widget.dart';
+import 'package:block_folio/view_models/auth_viewmodel.dart';
 import 'package:block_folio/view_models/coins_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +10,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final coinsVM = Provider.of<CoinsViewModel>(context);
+    final loginVM = Provider.of<LoginViewModel>(context, listen: true);
 
     return Scaffold(
       appBar: AppBar(
@@ -20,40 +21,46 @@ class HomePage extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            DrawerHeader(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    Icons.account_circle,
-                    size: 64,
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    "No Name",
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    "No Email",
-                    style: Theme.of(context).textTheme.titleSmall,
-                  )
-                ],
-              ),
-            ),
-            ListTile(
-              title: Text("Profile"),
+            InkWell(
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return Text("Profile");
-                    },
-                  ),
-                );
+                Navigator.pushNamed(context, "/profile");
               },
+              child: Container(
+                padding: EdgeInsets.only(bottom: 16),
+                child: DrawerHeader(
+                  decoration: BoxDecoration(
+                    border:
+                        Border(bottom: BorderSide(color: Colors.transparent)),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.account_circle,
+                        size: 64,
+                      ),
+                      SizedBox(height: 8),
+                      if (loginVM.currentUser != null)
+                        Text(
+                          loginVM.currentUser!.name!,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      if (loginVM.currentUser != null) SizedBox(height: 4),
+                      if (loginVM.currentUser != null)
+                        Text(
+                          loginVM.currentUser!.email!,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      if (loginVM.currentUser == null)
+                        Text(
+                          "Log In",
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                    ],
+                  ),
+                ),
+              ),
             ),
             ListTile(
               title: Text("Find a Bus"),
