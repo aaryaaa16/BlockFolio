@@ -10,9 +10,12 @@ class CoinsViewModel with ChangeNotifier {
   List<Coin> coins = [];
   CoinDetail? currentCoin;
 
-  void viewDetail(BuildContext context, String coinID) async {
-    
+  Future<void> viewDetail(BuildContext context, String coinID) async {
+    Navigator.pushNamed(context, '/coinInfo');
+    isLoading = true;
+    notifyListeners();
     currentCoin = await coinGecko.getCoinDetail(coinID);
+    isLoading = false;
     notifyListeners();
   }
 

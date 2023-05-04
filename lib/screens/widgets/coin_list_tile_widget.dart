@@ -18,8 +18,8 @@ class CoinListTile extends StatelessWidget {
     return Column(
       children: [
         InkWell(
-          onTap: () {
-            coinsVM.coinGecko.getCoinDetail(coin.id); 
+          onTap: () async {
+            await coinsVM.viewDetail(context, coin.id);
           },
           child: Row(
             mainAxisSize: MainAxisSize.max,

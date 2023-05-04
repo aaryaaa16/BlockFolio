@@ -11,11 +11,24 @@ class CoinDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final coinsVM = Provider.of<CoinsViewModel>(context, listen: false);
+    final coinsVM = Provider.of<CoinsViewModel>(context);
 
     var microSeconds = 1683225493000;
     var date = new DateTime.fromMicrosecondsSinceEpoch(microSeconds);
     print(date);
+
+    String? name = coinsVM.currentCoin?.name;
+    print(name);
+    String? symbol = coinsVM.currentCoin?.symbol;
+    String? currentPrice =
+        coinsVM.currentCoin?.marketData?.currentPrice!['usd']?.toString();
+    String? totalVolume =
+        coinsVM.currentCoin?.marketData?.totalVolume!['usd']?.toString();
+    String? high24 =
+        coinsVM.currentCoin?.marketData?.high24H!['usd']?.toString();
+    String? low24 = coinsVM.currentCoin?.marketData?.low24H!['usd']?.toString();
+    String? marketCap =
+        coinsVM.currentCoin?.marketData?.marketCap!['usd']?.toString();
 
     List<List<double>> prices = [
       [1682967657190, 28171.60655909179],
@@ -94,12 +107,76 @@ class CoinDetailScreen extends StatelessWidget {
     ];
 
     Widget header() => Container(
-        height: 200,
-        width: 400,
-        child: Column(
-          children: [Text('')],
-        ));
-    Widget footer() => Text('Footer');
+          height: 200,
+          width: 400,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(12.0, 60.0, 8.0, 8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name!,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      ),
+                ),
+                Text(
+                  symbol!,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      ),
+                ),
+                Divider(
+                  height: 20,
+                ),
+                Text(
+                  "\$ $currentPrice",
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      ),
+                )
+              ],
+            ),
+          ),
+        );
+    Widget footer() => Container(
+          height: 390,
+          width: 400,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(8.0, 20, 8.0, 12),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [Text('24H High'), Text(high24!)],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [Text('24H Low'), Text(low24!)],
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [Text('Total Volume'), Text(totalVolume!)],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [Text('Market Cap'), Text(marketCap!)],
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
     Widget graph() => Container(
           height: 300,
           width: 400,
@@ -109,14 +186,16 @@ class CoinDetailScreen extends StatelessWidget {
                 dataSource: prices,
                 xValueMapper: (List<double> number, _) => number[0],
                 yValueMapper: (List<double> number, _) => number[1],
-              )
+              ),
             ],
           ),
         );
     return Scaffold(
-      body: Column(
-        children: [header(), graph(), footer()],
-      ),
+      body: coinsVM.isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Column(
+              children: [header(), graph(), footer()],
+            ),
     );
   }
 }
