@@ -127,7 +127,7 @@ class CoinDetail {
         "last_updated": lastUpdated?.toIso8601String(),
     };
 
-    static testCoin = CoinDetail.fromJson({
+    static CoinDetail testCoin = CoinDetail.fromJson({
     "id": "bitcoin",
     "symbol": "btc",
     "name": "Bitcoin",
