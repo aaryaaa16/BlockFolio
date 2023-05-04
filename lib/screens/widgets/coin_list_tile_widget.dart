@@ -1,4 +1,5 @@
 import 'package:block_folio/models/coin.dart';
+// import 'package:block_folio/models/coin_detail.dart';
 import 'package:block_folio/screens/widgets/small_sparkline_widget.dart';
 import 'package:block_folio/view_models/coins_viewmodel.dart';
 import 'package:flutter/material.dart';

@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:block_folio/models/coin_detail.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '../models/coin.dart';
+import '../view_models/coins_viewmodel.dart';
+
 class CoinDetail extends StatelessWidget {
-  const CoinDetail({Key? key}) : super(key: key);
+  CoinDetail({super.key});
+
 
   @override
   Widget build(BuildContext context) {
-
+    final coinsVM = Provider.of<CoinsViewModel>(context, listen: false);
+    
     var microSeconds = 1683225493000;
     var date = new DateTime.fromMicrosecondsSinceEpoch(microSeconds);
     print(date);
@@ -307,7 +313,17 @@ class CoinDetail extends StatelessWidget {
     ]
   ];
 
-    Widget header() => Text('Header');
+    Widget header() => Container(
+      height: 200,
+      width: 400,
+      child: Column(
+        children: [
+          Text(
+            ''
+          )
+        ],
+      )
+    );
     Widget footer() => Text('Footer');
     Widget graph() => Container(
       height: 300,

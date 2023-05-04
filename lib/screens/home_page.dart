@@ -97,7 +97,7 @@ class HomePage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const CoinDetail())
+                        MaterialPageRoute(builder: (context) => CoinDetail())
                       );
                     },
                   child: Text(
