@@ -19,7 +19,7 @@ class CoinGecko {
     final response = await http.get(uri);
     var responseData = json.decode(response.body);
     List<Coin> coins = [];
-    for (var coin in responseData) {
+    for (var coin in  responseData) {
       coins.add(Coin.fromJson(coin));
     }
     return coins;
