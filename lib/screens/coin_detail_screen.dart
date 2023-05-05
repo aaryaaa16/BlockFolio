@@ -203,63 +203,59 @@ class CoinDetailScreen extends StatelessWidget {
 
     Widget footer() => Container(
           child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            padding: EdgeInsets.all(16.0),
+            // child: SingleChildScrollView(
+            //   scrollDirection: Axis.vertical,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
-                    Row(
-                      children: [
-                        Text('24H L'),
-                        Text(
-                          low24!,
-                          textAlign: TextAlign.end,
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('24H H'),
-                        Text(
-                          high24!,
-                          textAlign: TextAlign.end,
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('Total Volume'),
-                        Text(
-                          totalVolume!,
-                          textAlign: TextAlign.end,
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('Market Cap'),
-                        Text(
-                          marketCap!,
-                          textAlign: TextAlign.end,
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('Liquidity Score'),
-                        Text(liquidityScore!)
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('Community Score'),
-                        Text(communityScore!)
-                      ],
-                    ),
+                    Text('24H L'),
+                    Text(
+                      low24!,
+                      textAlign: TextAlign.end,
+                    )
                   ],
                 ),
-              )),
+                Row(
+                  children: [
+                    Text('24H H'),
+                    Text(
+                      high24!,
+                      textAlign: TextAlign.end,
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text('Total Volume'),
+                    Text(
+                      totalVolume!,
+                      textAlign: TextAlign.end,
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text('Market Cap'),
+                    Text(
+                      marketCap!,
+                      textAlign: TextAlign.end,
+                    )
+                  ],
+                ),
+                Row(
+                  children: [Text('Liquidity Score'), Text(liquidityScore!)],
+                ),
+                Row(
+                  children: [Text('Community Score'), Text(communityScore!)],
+                ),
+              ],
+            ),
+            // )
+          ),
         );
 
     Widget volumesChart() => coinsVM.graphData == null
@@ -292,11 +288,19 @@ class CoinDetailScreen extends StatelessWidget {
               Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("Duration: "),
+                        Text(
+                          "Duration: ",
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer,
+                                  ),
+                        ),
                         MenuAnchor(
                           menuChildren: rangeOptions
                               .map(
@@ -309,12 +313,26 @@ class CoinDetailScreen extends StatelessWidget {
                               )
                               .toList(),
                           builder: (context, controller, child) {
-                            return TextButton(
-                              child: Row(
-                                children: [
-                                  Text(coinsVM.selectedRange),
-                                  Icon(Icons.arrow_drop_down)
-                                ],
+                            return OutlinedButton(
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      coinsVM.selectedRange,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            // fontWeight: FontWeight.bold,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimaryContainer,
+                                          ),
+                                    ),
+                                    Icon(Icons.arrow_drop_down)
+                                  ],
+                                ),
                               ),
                               onPressed: () {
                                 if (controller.isOpen) {
