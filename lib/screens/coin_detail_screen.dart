@@ -10,15 +10,14 @@ class CoinDetailScreen extends StatelessWidget {
 
   get rangeOptions => null;
 
-  
-    // _launchURLBrowser() async {
-    //   var url = website;
-    //   if (await canLaunch(url!)) {
-    //     await launch(url);
-    //   } else {
-    //     throw 'Could not launch $url';
-    //   }
-    // }
+  // _launchURLBrowser() async {
+  //   var url = website;
+  //   if (await canLaunch(url!)) {
+  //     await launch(url);
+  //   } else {
+  //     throw 'Could not launch $url';
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +59,7 @@ class CoinDetailScreen extends StatelessWidget {
       } else {
         double change = finalPrice - initialPrice;
         double percentage = (change / initialPrice) * 100;
-        return percentage.toStringAsFixed(2);
+        return percentage.toStringAsFixed(2) + "%";
       }
     }
 
@@ -152,9 +151,21 @@ class CoinDetailScreen extends StatelessWidget {
                           children: [
                             Text(
                               getChange(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                    color: lineColor(),
+                                  ),
                             ),
                             Text(
                               getChangePercentage(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    color: lineColor(),
+                                  ),
                             ),
                           ],
                         ),
@@ -225,46 +236,72 @@ class CoinDetailScreen extends StatelessWidget {
           ),
         );
 
+    Widget volumesChart() => coinsVM.graphData == null
+        ? Text("No Graph Data")
+        : Container(
+            padding: EdgeInsets.only(left: 48),
+            height: 50,
+            child: SfCartesianChart(
+              plotAreaBorderWidth: 0,
+              primaryXAxis: DateTimeAxis(
+                intervalType: DateTimeIntervalType.auto,
+                isVisible: false,
+              ),
+              primaryYAxis: NumericAxis(isVisible: false),
+              series: <ChartSeries>[
+                ColumnSeries<List<double>, DateTime>(
+                  dataSource: coinsVM.graphData!.totalVolumes,
+                  xValueMapper: (List<double> data, _) =>
+                      DateTime.fromMillisecondsSinceEpoch(data[0].toInt()),
+                  yValueMapper: (List<double> data, _) => data[1],
+                ),
+              ],
+            ),
+          );
+
     Widget graph() => coinsVM.graphData == null
         ? Text("No graph data")
         : Stack(
             children: [
               Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text("Duration: "),
-                      MenuAnchor(
-                        menuChildren: rangeOptions
-                            .map(
-                              (e) => RadioMenuButton<String>(
-                                value: e[0],
-                                groupValue: coinsVM.selectedRange,
-                                onChanged: coinsVM.setRange,
-                                child: Text(e[1]),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text("Duration: "),
+                        MenuAnchor(
+                          menuChildren: rangeOptions
+                              .map(
+                                (e) => RadioMenuButton<String>(
+                                  value: e[0],
+                                  groupValue: coinsVM.selectedRange,
+                                  onChanged: coinsVM.setRange,
+                                  child: Text(e[1]),
+                                ),
+                              )
+                              .toList(),
+                          builder: (context, controller, child) {
+                            return TextButton(
+                              child: Row(
+                                children: [
+                                  Text(coinsVM.selectedRange),
+                                  Icon(Icons.arrow_drop_down)
+                                ],
                               ),
-                            )
-                            .toList(),
-                        builder: (context, controller, child) {
-                          return TextButton(
-                            child: Row(
-                              children: [
-                                Text(coinsVM.selectedRange),
-                                Icon(Icons.arrow_drop_down)
-                              ],
-                            ),
-                            onPressed: () {
-                              if (controller.isOpen) {
-                                controller.close();
-                              } else {
-                                controller.open();
-                              }
-                            },
-                          );
-                        },
-                      )
-                    ],
+                              onPressed: () {
+                                if (controller.isOpen) {
+                                  controller.close();
+                                } else {
+                                  controller.open();
+                                }
+                              },
+                            );
+                          },
+                        )
+                      ],
+                    ),
                   ),
                   Container(
                     height: 300,
@@ -272,6 +309,8 @@ class CoinDetailScreen extends StatelessWidget {
                       primaryXAxis: DateTimeAxis(
                         intervalType: DateTimeIntervalType.auto,
                       ),
+                      zoomPanBehavior: ZoomPanBehavior(
+                          enablePinching: true, enablePanning: true),
                       series: <ChartSeries>[
                         LineSeries<List<double>, DateTime>(
                           dataSource: coinsVM.graphData!.prices,
@@ -304,7 +343,7 @@ class CoinDetailScreen extends StatelessWidget {
       body: coinsVM.isLoading
           ? Center(child: CircularProgressIndicator())
           : Column(
-              children: [header(), graph(), footer()],
+              children: [header(), graph(), volumesChart(), footer()],
             ),
     );
   }
