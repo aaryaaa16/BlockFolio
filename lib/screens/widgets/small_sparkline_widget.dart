@@ -3,30 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class SmallSparkline extends StatelessWidget {
-  SmallSparkline({super.key, required this.sparkline});
+  SmallSparkline(
+      {super.key, required this.givenSparkline, required this.color});
 
-  Sparkline sparkline;
+  Sparkline givenSparkline;
+  Color color;
   @override
   Widget build(BuildContext context) {
+    int len = givenSparkline.price.length;
+    Sparkline sparkline = Sparkline(
+      price: givenSparkline.price.sublist((len * 6 / 7).toInt(), len),
+    );
     return Stack(
       children: [
-        SfSparkLineChart(
-          data: sparkline.price,
-          axisLineWidth: 0,
-          color: sparkline.price.first < sparkline.price.last
-              ? Colors.green
-              : Colors.red,
-          width: 1,
-        ),
-        Container(
-          child: SfSparkAreaChart(
+        if (sparkline.price.isNotEmpty)
+          SfSparkLineChart(
             data: sparkline.price,
             axisLineWidth: 0,
-            color: sparkline.price.first < sparkline.price.last
-                ? Colors.green.withOpacity(0.2)
-                : Colors.red.withOpacity(0.2),
+            color: color,
+            width: 1,
           ),
-        ),
+        if (sparkline.price.isNotEmpty)
+          Container(
+            child: SfSparkAreaChart(
+              data: sparkline.price,
+              axisLineWidth: 0,
+              color: color.withOpacity(0.2),
+            ),
+          ),
       ],
     );
   }

@@ -5,13 +5,37 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:block_folio/screens/coin_detail_screen.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  late ScrollController scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController = ScrollController();
+  }
 
   @override
   Widget build(BuildContext context) {
     final coinsVM = Provider.of<CoinsViewModel>(context);
     final loginVM = Provider.of<LoginViewModel>(context, listen: true);
+
+    void handleScrolling() {
+      if (scrollController.offset >=
+          scrollController.position.maxScrollExtent) {
+        if (!coinsVM.isLoading) {
+          coinsVM.addPage();
+        }
+      }
+    }
+
+    scrollController.addListener(handleScrolling);
 
     return Scaffold(
       appBar: AppBar(
@@ -73,93 +97,28 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      body: coinsVM.coins.isEmpty
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : Column(
-              children: [
-                Container(
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.all(8.0),
-                        width: 48,
-                        child: Text(
-                          'Icon',
-                          style:
-                              Theme.of(context).textTheme.labelLarge?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimaryContainer,
-                                  ),
-                        ),
-                      ),
-                      Text(
-                        'Name',
-                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimaryContainer,
-                            ),
-                      ),
-                      Expanded(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                '24h',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelLarge
-                                    ?.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimaryContainer,
-                                    ),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 8.0),
-                              width: 96,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    '7d',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelLarge
-                                        ?.copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimaryContainer,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: coinsVM.coins
-                          .map((e) => CoinListTile(coin: e))
-                          .toList(),
-                    ),
-                  ),
-                ),
-              ],
+      body: CustomScrollView(
+        controller: scrollController,
+        slivers: [
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return CoinListTile(coin: coinsVM.coins[index]);
+              },
+              childCount: coinsVM.coins.length,
             ),
+          ),
+          if (coinsVM.isLoading)
+            SliverToBoxAdapter(
+              child: Container(
+                padding: EdgeInsets.all(16.0),
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

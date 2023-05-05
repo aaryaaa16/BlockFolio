@@ -35,12 +35,17 @@ class CoinListTile extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    coin.name,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
-                        ),
+                  SizedBox(
+                    width: 120,
+                    child: Text(
+                      coin.name,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
+                          ),
+                      maxLines: 2,
+                    ),
                   ),
                   Text(
                     coin.symbol.toUpperCase(),
@@ -61,7 +66,7 @@ class CoinListTile extends StatelessWidget {
                           Text(
                             formatCurrency.format(coin.currentPrice),
                             style: TextStyle(
-                              color: coin.priceChangePercentage24H >= 0
+                              color: (coin.priceChangePercentage24H ?? 0.0) >= 0
                                   ? Colors.green
                                   : Colors.red,
                               fontSize: 14,
@@ -71,23 +76,26 @@ class CoinListTile extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Icon(
-                                coin.priceChangePercentage24H >= 0
+                                (coin.priceChangePercentage24H ?? 0.0) >= 0
                                     ? Icons.arrow_upward_rounded
                                     : Icons.arrow_downward_rounded,
-                                color: coin.priceChangePercentage24H >= 0
-                                    ? Colors.green
-                                    : Colors.red,
+                                color:
+                                    (coin.priceChangePercentage24H ?? 0.0) >= 0
+                                        ? Colors.green
+                                        : Colors.red,
                                 size: 14,
                               ),
                               Text(
-                                coin.priceChangePercentage24H
+                                (coin.priceChangePercentage24H ?? 0.0)
                                         .abs()
                                         .toStringAsFixed(2) +
                                     "%",
                                 style: TextStyle(
-                                  color: coin.priceChangePercentage24H >= 0
-                                      ? Colors.green
-                                      : Colors.red,
+                                  color:
+                                      (coin.priceChangePercentage24H ?? 0.0) >=
+                                              0
+                                          ? Colors.green
+                                          : Colors.red,
                                 ),
                               ),
                             ],
@@ -98,7 +106,12 @@ class CoinListTile extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 8.0),
                           height: 48,
                           width: 96,
-                          child: SmallSparkline(sparkline: coin.sparkline)),
+                          child: SmallSparkline(
+                            givenSparkline: coin.sparkline,
+                            color: (coin.priceChangePercentage24H ?? 0.0) >= 0
+                                ? Colors.green
+                                : Colors.red,
+                          )),
                     ],
                   ),
                 ),

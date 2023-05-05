@@ -12,7 +12,7 @@ class CoinGecko {
     String finalURL = baseURL + "coins/markets";
     Map<String, String> queryArguments = {
       "vs_currency": currency,
-      "per_page": "20",
+      "per_page": "100",
       "page": pageNo,
       "sparkline": "true",
     };

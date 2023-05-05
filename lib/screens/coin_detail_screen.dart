@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../view_models/coins_viewmodel.dart';
-import 'package:url_launcher/link.dart';
 
-class CoinDetailScreen extends StatelessWidget {
+class CoinDetailScreen extends StatefulWidget {
   CoinDetailScreen({super.key});
+
+  @override
+  State<CoinDetailScreen> createState() => _CoinDetailScreenState();
+}
+
+class _CoinDetailScreenState extends State<CoinDetailScreen> {
+  late TrackballBehavior _trackballBehavior;
+
+  @override
+  void initState() {
+    _trackballBehavior = TrackballBehavior(
+        enable: true,
+      activationMode: ActivationMode.singleTap,
+    );
+    super.initState();
+  }
 
   get rangeOptions => null;
 
   // _launchURLBrowser() async {
-  //   var url = website;
-  //   if (await canLaunch(url!)) {
-  //     await launch(url);
-  //   } else {
-  //     throw 'Could not launch $url';
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     final coinsVM = Provider.of<CoinsViewModel>(context);
@@ -203,59 +209,68 @@ class CoinDetailScreen extends StatelessWidget {
 
     Widget footer() => Container(
           child: Padding(
-            padding: EdgeInsets.all(16.0),
-            // child: SingleChildScrollView(
-            //   scrollDirection: Axis.vertical,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+              padding: EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('24H L'),
-                    Text(
-                      low24!,
-                      textAlign: TextAlign.end,
-                    )
+                    Row(
+                      children: [
+                        Text('24H L'),
+                        Text(
+                          low24!,
+                          textAlign: TextAlign.end,
+                        )
+                      ],
+                    ),
+<<<<<<< HEAD
+
+                    Column(
+=======
+                    Row(
+>>>>>>> 1887d7710be0c1da4a9afa18b2a7ea862dee3c4f
+                      children: [
+                        Text('24H H'),
+                        Text(
+                          high24!,
+                          textAlign: TextAlign.end,
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text('Total Volume'),
+                        Text(
+                          totalVolume!,
+                          textAlign: TextAlign.end,
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text('Market Cap'),
+                        Text(
+                          marketCap!,
+                          textAlign: TextAlign.end,
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text('Liquidity Score'),
+                        Text(liquidityScore!)
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text('Community Score'),
+                        Text(communityScore!)
+                      ],
+                    ),
                   ],
                 ),
-                Row(
-                  children: [
-                    Text('24H H'),
-                    Text(
-                      high24!,
-                      textAlign: TextAlign.end,
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text('Total Volume'),
-                    Text(
-                      totalVolume!,
-                      textAlign: TextAlign.end,
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text('Market Cap'),
-                    Text(
-                      marketCap!,
-                      textAlign: TextAlign.end,
-                    )
-                  ],
-                ),
-                Row(
-                  children: [Text('Liquidity Score'), Text(liquidityScore!)],
-                ),
-                Row(
-                  children: [Text('Community Score'), Text(communityScore!)],
-                ),
-              ],
-            ),
-            // )
-          ),
+              )),
         );
 
     Widget volumesChart() => coinsVM.graphData == null
@@ -364,13 +379,21 @@ class CoinDetailScreen extends StatelessWidget {
                                   data[0].toInt()),
                           yValueMapper: (List<double> data, _) => data[1],
                         ),
-                        AreaSeries<List<double>, DateTime>(
-                          dataSource: coinsVM.graphData!.prices,
-                          xValueMapper: (List<double> data, _) =>
-                              DateTime.fromMillisecondsSinceEpoch(
-                                  data[0].toInt()),
-                          yValueMapper: (List<double> data, _) => data[1],
-                          gradient: areaGradient(),
+                        SfCartesianChart(
+                          trackballBehavior: _trackballBehavior,
+                          primaryXAxis: DateTimeAxis(
+                            intervalType: DateTimeIntervalType.auto,
+                          ),
+                          series: <ChartSeries>[
+                            AreaSeries<List<double>, DateTime>(
+                              dataSource: coinsVM.graphData!.prices,
+                              xValueMapper: (List<double> data, _) =>
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                      data[0].toInt()),
+                              yValueMapper: (List<double> data, _) => data[1],
+                              gradient: areaGradient(),
+                            ),
+                          ],
                         ),
                       ],
                     ),

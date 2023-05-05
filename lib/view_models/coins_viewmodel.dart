@@ -16,7 +16,8 @@ class CoinsViewModel with ChangeNotifier {
   void setRange(String? newRange) async {
     selectedRange = newRange ?? '7';
     notifyListeners();
-    graphData = await coinGecko.getCoinGraphData(currentCoin?.id ?? "bitcoin", selectedRange);
+    graphData = await coinGecko.getCoinGraphData(
+        currentCoin?.id ?? "bitcoin", selectedRange);
     notifyListeners();
   }
 
@@ -34,12 +35,14 @@ class CoinsViewModel with ChangeNotifier {
     initialize();
   }
 
-  void incrementPage() async {
+  void addPage() async {
     if (pageNumber < 10) {
       pageNumber++;
       isLoading = true;
       notifyListeners();
-      coins = await coinGecko.getCoins(pageNo: pageNumber.toString());
+      final newCoins = await coinGecko.getCoins(pageNo: pageNumber.toString());
+      print("Called");
+      coins.addAll(newCoins);
       isLoading = false;
       notifyListeners();
     }
