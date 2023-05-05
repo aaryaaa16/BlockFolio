@@ -12,6 +12,7 @@ class CoinsViewModel with ChangeNotifier {
   CoinDetail? currentCoin;
   GraphData? graphData;
   String selectedRange = '7';
+  String searchQuery = "";
 
   void setRange(String? newRange) async {
     selectedRange = newRange ?? '7';

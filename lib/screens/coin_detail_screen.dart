@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../view_models/coins_viewmodel.dart';
 
-class CoinDetailScreen extends StatefulWidget {
+
 class CoinDetailScreen extends StatefulWidget {
   CoinDetailScreen({super.key});
 
