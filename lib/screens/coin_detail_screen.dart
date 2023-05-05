@@ -206,46 +206,57 @@ class CoinDetailScreen extends StatelessWidget {
               padding: EdgeInsets.all(16.0),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Row(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Row(
                       children: [
-                        Row(
-                          children: [Text('24H L'), Text(low24!)],
-                        ),
-                        Row(
-                          children: [Text('24H H'), Text(high24!)],
+                        Text('24H L'),
+                        Text(
+                          low24!,
+                          textAlign: TextAlign.end,
                         )
                       ],
                     ),
-                    
-                    Column(
+                    Row(
                       children: [
-                        Row(
-                          children: [Text('Total Volume'), Text(totalVolume!)],
-                        ),
-                        Row(
-                          children: [Text('Market Cap'), Text(marketCap!)],
+                        Text('24H H'),
+                        Text(
+                          high24!,
+                          textAlign: TextAlign.end,
                         )
                       ],
                     ),
-                    Column(
+                    Row(
                       children: [
-                        Row(
-                          children: [
-                            Text('Liquidity Score'),
-                            Text(liquidityScore!)
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Text('Community Score'),
-                            Text(communityScore!)
-                          ],
+                        Text('Total Volume'),
+                        Text(
+                          totalVolume!,
+                          textAlign: TextAlign.end,
                         )
                       ],
-                    )
+                    ),
+                    Row(
+                      children: [
+                        Text('Market Cap'),
+                        Text(
+                          marketCap!,
+                          textAlign: TextAlign.end,
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text('Liquidity Score'),
+                        Text(liquidityScore!)
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text('Community Score'),
+                        Text(communityScore!)
+                      ],
+                    ),
                   ],
                 ),
               )),
@@ -355,10 +366,23 @@ class CoinDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(name ?? "Loading..."),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.shopping_cart_rounded),
+      ),
       body: coinsVM.isLoading
           ? Center(child: CircularProgressIndicator())
           : Column(
-              children: [header(), graph(), volumesChart(), footer()],
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                header(),
+                graph(),
+                volumesChart(),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: footer(),
+                )
+              ],
             ),
     );
   }
