@@ -39,6 +39,8 @@ class CoinDetailScreen extends StatelessWidget {
     String? marketCap =
         coinsVM.currentCoin?.marketData?.marketCap!['usd']?.toString();
     String? imageURL = coinsVM.currentCoin?.image?.large;
+    String? liquidityScore = coinsVM.currentCoin?.liquidityScore?.toString();
+    String? communityScore = coinsVM.currentCoin?.communityScore?.toString();
 
     String getChange() {
       double? initialPrice = coinsVM.graphData?.prices.first[1];
@@ -201,39 +203,52 @@ class CoinDetailScreen extends StatelessWidget {
 
     Widget footer() => Container(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 20, 8.0, 12),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              padding: EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
                   children: [
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [Text('24H High'), Text(high24!)],
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [Text('24H L'), Text(low24!)],
+                        ),
+                        Row(
+                          children: [Text('24H H'), Text(high24!)],
+                        )
+                      ],
+                    ),
+                    
+                    Column(
+                      children: [
+                        Row(
+                          children: [Text('Total Volume'), Text(totalVolume!)],
+                        ),
+                        Row(
+                          children: [Text('Market Cap'), Text(marketCap!)],
+                        )
+                      ],
                     ),
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [Text('24H Low'), Text(low24!)],
+                      children: [
+                        Row(
+                          children: [
+                            Text('Liquidity Score'),
+                            Text(liquidityScore!)
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text('Community Score'),
+                            Text(communityScore!)
+                          ],
+                        )
+                      ],
                     )
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [Text('Total Volume'), Text(totalVolume!)],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [Text('Market Cap'), Text(marketCap!)],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+              )),
         );
 
     Widget volumesChart() => coinsVM.graphData == null
