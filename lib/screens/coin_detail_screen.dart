@@ -16,7 +16,7 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
   @override
   void initState() {
     _trackballBehavior = TrackballBehavior(
-        enable: true,
+      enable: true,
       activationMode: ActivationMode.singleTap,
     );
     super.initState();
@@ -224,12 +224,7 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
                         )
                       ],
                     ),
-<<<<<<< HEAD
-
                     Column(
-=======
-                    Row(
->>>>>>> 1887d7710be0c1da4a9afa18b2a7ea862dee3c4f
                       children: [
                         Text('24H H'),
                         Text(
@@ -342,14 +337,14 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
                   ),
                   Container(
                     height: 300,
-<<<<<<< HEAD
                     child: Stack(
                       children: [
                         SfCartesianChart(
-                          // trackballBehavior: _trackballBehavior,
                           primaryXAxis: DateTimeAxis(
                             intervalType: DateTimeIntervalType.auto,
                           ),
+                          zoomPanBehavior: ZoomPanBehavior(
+                              enablePinching: true, enablePanning: true),
                           series: <ChartSeries>[
                             LineSeries<List<double>, DateTime>(
                               dataSource: coinsVM.graphData!.prices,
@@ -360,22 +355,6 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
                               yValueMapper: (List<double> data, _) => data[1],
                             ),
                           ],
-=======
-                    child: SfCartesianChart(
-                      primaryXAxis: DateTimeAxis(
-                        intervalType: DateTimeIntervalType.auto,
-                      ),
-                      zoomPanBehavior: ZoomPanBehavior(
-                          enablePinching: true, enablePanning: true),
-                      series: <ChartSeries>[
-                        LineSeries<List<double>, DateTime>(
-                          dataSource: coinsVM.graphData!.prices,
-                          color: lineColor(),
-                          xValueMapper: (List<double> data, _) =>
-                              DateTime.fromMillisecondsSinceEpoch(
-                                  data[0].toInt()),
-                          yValueMapper: (List<double> data, _) => data[1],
->>>>>>> 1887d7710be0c1da4a9afa18b2a7ea862dee3c4f
                         ),
                         SfCartesianChart(
                           trackballBehavior: _trackballBehavior,
