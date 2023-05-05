@@ -8,6 +8,8 @@ import '../view_models/coins_viewmodel.dart';
 
 class CoinDetailScreen extends StatelessWidget {
   CoinDetailScreen({super.key});
+  
+  get rangeOptions => null;
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +106,8 @@ class CoinDetailScreen extends StatelessWidget {
       [1683219644665, 28928.724358922926],
       [1683223201178, 28854.970014956503],
       [1683225493000, 28769.70541103912]
+    ];
+
     List<List<String>> rangeOptions = [
       ["1", "1D"],
       ["3", "3D"],
@@ -186,8 +190,6 @@ class CoinDetailScreen extends StatelessWidget {
             ),
           ),
         );
-
-    Widget footer() => Text('Footer');
 
     Widget graph() => coinsVM.graphData == null
         ? Text("No graph data")
