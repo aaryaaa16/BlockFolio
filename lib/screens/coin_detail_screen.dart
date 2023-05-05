@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:block_folio/models/coin_detail.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
-import '../models/coin.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../view_models/coins_viewmodel.dart';
+import 'package:url_launcher/link.dart';
 
 class CoinDetailScreen extends StatelessWidget {
   CoinDetailScreen({super.key});
+
+  get rangeOptions => null;
+
+  
+    // _launchURLBrowser() async {
+    //   var url = website;
+    //   if (await canLaunch(url!)) {
+    //     await launch(url);
+    //   } else {
+    //     throw 'Could not launch $url';
+    //   }
+    // }
 
   @override
   Widget build(BuildContext context) {
