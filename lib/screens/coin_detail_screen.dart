@@ -208,133 +208,162 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
         );
 
     Widget footer() => Container(
-          child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Container(
-                  padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                  width: double.infinity,
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('24H L'),
-                          Text(
-                            low24!
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('24H H'),
-                          Text(
-                              high24!
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Total Volume'),
-                          Text(
-                              totalVolume!
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Markey Cap'),
-                          Text(
-                              marketCap!
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Liquidity Score'),
-                          Text(
-                              liquidityScore!
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Community Score'),
-                          Text(
-                              communityScore!
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                scrollDirection: Axis.horizontal,
+        child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Container(
+                padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                width: double.infinity,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('24H L'),
                         Text(
-                          low24!,
-                          textAlign: TextAlign.end,
+                          '24H L',
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondaryContainer,
+                                  ),
+                        ),
+                        Text(
+                          "\$$low24",
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondaryContainer,
+                                  ),
                         )
                       ],
                     ),
-                    Column(
+                    SizedBox(height: 5),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('24H H'),
                         Text(
-                          high24!,
-                          textAlign: TextAlign.end,
+                          '24H H',
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondaryContainer,
+                                  ),
+                        ),
+                        Text(
+                          "\$$high24",
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondaryContainer,
+                                  ),
                         )
                       ],
                     ),
+                    SizedBox(height: 5),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Total Volume'),
                         Text(
-                          totalVolume!,
-                          textAlign: TextAlign.end,
+                          'Total Volume',
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondaryContainer,
+                                  ),
+                        ),
+                        Text(
+                          "\$$totalVolume",
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondaryContainer,
+                                  ),
                         )
                       ],
                     ),
+                    SizedBox(height: 5),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Market Cap'),
                         Text(
-                          marketCap!,
-                          textAlign: TextAlign.end,
+                          'Markey Cap',
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondaryContainer,
+                                  ),
+                        ),
+                        Text(
+                          "\$$marketCap",
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondaryContainer,
+                                  ),
                         )
                       ],
                     ),
+                    SizedBox(height: 5),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Liquidity Score'),
-                        Text(liquidityScore!)
+                        Text(
+                          'Liquidity Score',
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondaryContainer,
+                                  ),
+                        ),
+                        Text(
+                          liquidityScore!,
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondaryContainer,
+                                  ),
+                        )
                       ],
                     ),
+                    SizedBox(height: 5),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Community Score'),
-                        Text(communityScore!)
+                        Text(
+                          'Community Score',
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondaryContainer,
+                                  ),
+                        ),
+                        Text(
+                          communityScore!,
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondaryContainer,
+                                  ),
+                        )
                       ],
-                    ),
+                    )
                   ],
->>>>>>> 67fe6e6e75ffef30182fc19b34063377bbe94bdc
                 ),
-        );
+              ),
+            )));
 
     Widget volumesChart() => coinsVM.graphData == null
         ? Text("No Graph Data")
@@ -370,7 +399,15 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("Duration: "),
+                        Text(
+                          "Duration: ",
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer,
+                                  ),
+                        ),
                         MenuAnchor(
                           menuChildren: rangeOptions
                               .map(
@@ -383,20 +420,29 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
                               )
                               .toList(),
                           builder: (context, controller, child) {
-                            return TextButton(
-                              child: Row(
-                                children: [
-                                  Text(coinsVM.selectedRange),
-                                  Icon(Icons.arrow_drop_down)
-                                ],
+                            return Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: OutlinedButton(
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 8, 10, 8),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text(coinsVM.selectedRange),
+                                      Icon(Icons.arrow_drop_down)
+                                    ],
+                                  ),
+                                ),
+                                onPressed: () {
+                                  if (controller.isOpen) {
+                                    controller.close();
+                                  } else {
+                                    controller.open();
+                                  }
+                                },
                               ),
-                              onPressed: () {
-                                if (controller.isOpen) {
-                                  controller.close();
-                                } else {
-                                  controller.open();
-                                }
-                              },
                             );
                           },
                         )

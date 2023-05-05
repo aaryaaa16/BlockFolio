@@ -112,6 +112,7 @@ class _HomePageState extends State<HomePage> {
                   onTapOutside: (event) {
                     FocusManager.instance.primaryFocus?.unfocus();
                   },
+                  enableSuggestions: true,
                   cursorWidth: 1.4,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(
