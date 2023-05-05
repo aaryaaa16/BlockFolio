@@ -16,7 +16,7 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
   @override
   void initState() {
     _trackballBehavior = TrackballBehavior(
-        enable: true,
+      enable: true,
       activationMode: ActivationMode.singleTap,
     );
     super.initState();
@@ -279,61 +279,60 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
                     ],
                   ),
                 ),
-                // child: Column(
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   children: [
-                //     Row(
-                //       children: [
-                //         Text('24H L'),
-                //         Text(
-                //           low24!,
-                //           textAlign: TextAlign.end,
-                //         )
-                //       ],
-                //     ),
-                //
-                //     Row(
-                //       children: [
-                //         Text('24H H'),
-                //         Text(
-                //           high24!,
-                //           textAlign: TextAlign.end,
-                //         )
-                //       ],
-                //     ),
-                //     Row(
-                //       children: [
-                //         Text('Total Volume'),
-                //         Text(
-                //           totalVolume!,
-                //           textAlign: TextAlign.end,
-                //         )
-                //       ],
-                //     ),
-                //     Row(
-                //       children: [
-                //         Text('Market Cap'),
-                //         Text(
-                //           marketCap!,
-                //           textAlign: TextAlign.end,
-                //         )
-                //       ],
-                //     ),
-                //     Row(
-                //       children: [
-                //         Text('Liquidity Score'),
-                //         Text(liquidityScore!)
-                //       ],
-                //     ),
-                //     Row(
-                //       children: [
-                //         Text('Community Score'),
-                //         Text(communityScore!)
-                //       ],
-                //     ),
-                //   ],
-                // ),
-              )
+                scrollDirection: Axis.horizontal,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text('24H L'),
+                        Text(
+                          low24!,
+                          textAlign: TextAlign.end,
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Text('24H H'),
+                        Text(
+                          high24!,
+                          textAlign: TextAlign.end,
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text('Total Volume'),
+                        Text(
+                          totalVolume!,
+                          textAlign: TextAlign.end,
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text('Market Cap'),
+                        Text(
+                          marketCap!,
+                          textAlign: TextAlign.end,
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text('Liquidity Score'),
+                        Text(liquidityScore!)
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text('Community Score'),
+                        Text(communityScore!)
+                      ],
+                    ),
+                  ],
+>>>>>>> 67fe6e6e75ffef30182fc19b34063377bbe94bdc
                 ),
         );
 
@@ -409,10 +408,11 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
                     child: Stack(
                       children: [
                         SfCartesianChart(
-                          // trackballBehavior: _trackballBehavior,
                           primaryXAxis: DateTimeAxis(
                             intervalType: DateTimeIntervalType.auto,
                           ),
+                          zoomPanBehavior: ZoomPanBehavior(
+                              enablePinching: true, enablePanning: true),
                           series: <ChartSeries>[
                             LineSeries<List<double>, DateTime>(
                               dataSource: coinsVM.graphData!.prices,
@@ -453,7 +453,9 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
         title: Text(name ?? "Loading..."),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/purchaseCoin');
+        },
         child: Icon(Icons.shopping_cart_rounded),
       ),
       body: coinsVM.isLoading
