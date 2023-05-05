@@ -195,19 +195,25 @@ class CoinDetailScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
-                          children: [Text('24H L'), Text(low24!)],
+                          children: [
+                            Text(
+                              '24H L',
+                            ),
+                            Text(low24!)
+                          ],
                         ),
                         Row(
                           children: [Text('24H H'), Text(high24!)],
                         )
                       ],
                     ),
-                    
+                    VerticalDivider(),
                     Column(
                       children: [
                         Row(
@@ -218,6 +224,7 @@ class CoinDetailScreen extends StatelessWidget {
                         )
                       ],
                     ),
+                    VerticalDivider(),
                     Column(
                       children: [
                         Row(
@@ -256,6 +263,7 @@ class CoinDetailScreen extends StatelessWidget {
                                 value: e[0],
                                 groupValue: coinsVM.selectedRange,
                                 onChanged: coinsVM.setRange,
+                                // String date = e[1],
                                 child: Text(e[1]),
                               ),
                             )
