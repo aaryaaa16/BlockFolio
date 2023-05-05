@@ -4,6 +4,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../view_models/coins_viewmodel.dart';
 
 class CoinDetailScreen extends StatefulWidget {
+class CoinDetailScreen extends StatefulWidget {
   CoinDetailScreen({super.key});
 
   @override
@@ -224,12 +225,7 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
                         )
                       ],
                     ),
-<<<<<<< HEAD
-
                     Column(
-=======
-                    Row(
->>>>>>> 1887d7710be0c1da4a9afa18b2a7ea862dee3c4f
                       children: [
                         Text('24H H'),
                         Text(
@@ -364,20 +360,24 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
                   ),
                   Container(
                     height: 300,
-                    child: SfCartesianChart(
-                      primaryXAxis: DateTimeAxis(
-                        intervalType: DateTimeIntervalType.auto,
-                      ),
-                      zoomPanBehavior: ZoomPanBehavior(
-                          enablePinching: true, enablePanning: true),
-                      series: <ChartSeries>[
-                        LineSeries<List<double>, DateTime>(
-                          dataSource: coinsVM.graphData!.prices,
-                          color: lineColor(),
-                          xValueMapper: (List<double> data, _) =>
-                              DateTime.fromMillisecondsSinceEpoch(
-                                  data[0].toInt()),
-                          yValueMapper: (List<double> data, _) => data[1],
+                    child: Stack(
+                      children: [
+                        SfCartesianChart(
+                          primaryXAxis: DateTimeAxis(
+                            intervalType: DateTimeIntervalType.auto,
+                          ),
+                          zoomPanBehavior: ZoomPanBehavior(
+                              enablePinching: true, enablePanning: true),
+                          series: <ChartSeries>[
+                            LineSeries<List<double>, DateTime>(
+                              dataSource: coinsVM.graphData!.prices,
+                              color: lineColor(),
+                              xValueMapper: (List<double> data, _) =>
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                      data[0].toInt()),
+                              yValueMapper: (List<double> data, _) => data[1],
+                            ),
+                          ],
                         ),
                         SfCartesianChart(
                           trackballBehavior: _trackballBehavior,
