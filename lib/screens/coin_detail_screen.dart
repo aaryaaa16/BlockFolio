@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../view_models/coins_viewmodel.dart';
-import 'package:url_launcher/link.dart';
 
-class CoinDetailScreen extends StatelessWidget {
+class CoinDetailScreen extends StatefulWidget {
   CoinDetailScreen({super.key});
+
+  @override
+  State<CoinDetailScreen> createState() => _CoinDetailScreenState();
+}
+
+class _CoinDetailScreenState extends State<CoinDetailScreen> {
+  late TrackballBehavior _trackballBehavior;
+
+  @override
+  void initState() {
+    _trackballBehavior = TrackballBehavior(
+        enable: true,
+      activationMode: ActivationMode.singleTap,
+    );
+    super.initState();
+  }
 
   get rangeOptions => null;
 
   // _launchURLBrowser() async {
-  //   var url = website;
-  //   if (await canLaunch(url!)) {
-  //     await launch(url);
-  //   } else {
-  //     throw 'Could not launch $url';
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     final coinsVM = Provider.of<CoinsViewModel>(context);
@@ -207,7 +213,7 @@ class CoinDetailScreen extends StatelessWidget {
                         )
                       ],
                     ),
-                    
+
                     Column(
                       children: [
                         Row(
@@ -282,26 +288,39 @@ class CoinDetailScreen extends StatelessWidget {
                   ),
                   Container(
                     height: 300,
-                    child: SfCartesianChart(
-                      primaryXAxis: DateTimeAxis(
-                        intervalType: DateTimeIntervalType.auto,
-                      ),
-                      series: <ChartSeries>[
-                        LineSeries<List<double>, DateTime>(
-                          dataSource: coinsVM.graphData!.prices,
-                          color: lineColor(),
-                          xValueMapper: (List<double> data, _) =>
-                              DateTime.fromMillisecondsSinceEpoch(
-                                  data[0].toInt()),
-                          yValueMapper: (List<double> data, _) => data[1],
+                    child: Stack(
+                      children: [
+                        SfCartesianChart(
+                          // trackballBehavior: _trackballBehavior,
+                          primaryXAxis: DateTimeAxis(
+                            intervalType: DateTimeIntervalType.auto,
+                          ),
+                          series: <ChartSeries>[
+                            LineSeries<List<double>, DateTime>(
+                              dataSource: coinsVM.graphData!.prices,
+                              color: lineColor(),
+                              xValueMapper: (List<double> data, _) =>
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                      data[0].toInt()),
+                              yValueMapper: (List<double> data, _) => data[1],
+                            ),
+                          ],
                         ),
-                        AreaSeries<List<double>, DateTime>(
-                          dataSource: coinsVM.graphData!.prices,
-                          xValueMapper: (List<double> data, _) =>
-                              DateTime.fromMillisecondsSinceEpoch(
-                                  data[0].toInt()),
-                          yValueMapper: (List<double> data, _) => data[1],
-                          gradient: areaGradient(),
+                        SfCartesianChart(
+                          trackballBehavior: _trackballBehavior,
+                          primaryXAxis: DateTimeAxis(
+                            intervalType: DateTimeIntervalType.auto,
+                          ),
+                          series: <ChartSeries>[
+                            AreaSeries<List<double>, DateTime>(
+                              dataSource: coinsVM.graphData!.prices,
+                              xValueMapper: (List<double> data, _) =>
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                      data[0].toInt()),
+                              yValueMapper: (List<double> data, _) => data[1],
+                              gradient: areaGradient(),
+                            ),
+                          ],
                         ),
                       ],
                     ),
