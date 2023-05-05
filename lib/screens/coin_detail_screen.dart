@@ -28,7 +28,6 @@ class CoinDetailScreen extends StatelessWidget {
     }
 
     String? name = coinsVM.currentCoin?.name;
-    print(name);
     String? symbol = coinsVM.currentCoin?.symbol;
     String? currentPrice =
         coinsVM.currentCoin?.marketData?.currentPrice!['usd']?.toString();
@@ -39,17 +38,19 @@ class CoinDetailScreen extends StatelessWidget {
     String? low24 = coinsVM.currentCoin?.marketData?.low24H!['usd']?.toString();
     String? marketCap =
         coinsVM.currentCoin?.marketData?.marketCap!['usd']?.toString();
-    String? website = coinsVM.currentCoin?.links?.homepage![0]?.toString();
-    String? imageURL = coinsVM.currentCoin?.image?.thumb?.toString();
+    String? imageURL = coinsVM.currentCoin?.image?.large;
 
-    _launchURLApp() async {
-      var url = website;
-      if (await canLaunch(url!)) {
-        await launch(url, forceSafariVC: true, forceWebView: true);
+    String getChange() {
+      double? initialPrice = coinsVM.graphData?.prices.first[1];
+      double? finalPrice = coinsVM.graphData?.prices.last[1];
+      if (initialPrice == null || finalPrice == null) {
+        return "0.00";
       } else {
-        throw 'Could not launch $url';
+        double change = finalPrice - initialPrice;
+        return change.toStringAsFixed(2);
       }
     }
+
 
     List<List<double>> prices = [
       [1682967657190, 28171.60655909179],
@@ -138,22 +139,43 @@ class CoinDetailScreen extends StatelessWidget {
       ["max", "MAX"],
     ];
 
+    Color lineColor() {
+      double begin = coinsVM.graphData?.prices.first[1] ?? 0.0;
+      double end = coinsVM.graphData?.prices.last[1] ?? 0.0;
+      if (begin <= end) {
+        return Colors.green;
+      } else {
+        return Colors.red;
+      }
+    }
+
+    LinearGradient areaGradient() {
+      double begin = coinsVM.graphData?.prices.first[1] ?? 0.0;
+      double end = coinsVM.graphData?.prices.last[1] ?? 0.0;
+      if (begin <= end) {
+        return LinearGradient(colors: [
+          Colors.green.withOpacity(0.5),
+          Colors.green.withOpacity(0.0),
+        ], begin: Alignment.topCenter, end: Alignment.bottomCenter);
+      } else {
+        return LinearGradient(colors: [
+          Colors.red.withOpacity(0.5),
+          Colors.red.withOpacity(0.0),
+        ], begin: Alignment.topCenter, end: Alignment.bottomCenter);
+      }
+    }
+
     Widget header() => Container(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(12.0, 60.0, 8.0, 8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Image.network(imageURL!),
-                    Text(
-                      name!,
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimaryContainer,
-                          ),
-                    ),
-                  ],
+                Text(
+                  name!,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      ),
                 ),
                 Text(
                   symbol!,
@@ -179,11 +201,17 @@ class CoinDetailScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
-                )
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [],
+                ),
               ],
             ),
           ),
         );
+
     Widget footer() => Container(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 20, 8.0, 12),
@@ -213,9 +241,9 @@ class CoinDetailScreen extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [Text('Market Cap'), Text(marketCap!)],
-                    )
+                    ),
                   ],
-                )
+                ),
               ],
             ),
           ),
@@ -271,24 +299,20 @@ class CoinDetailScreen extends StatelessWidget {
                       series: <ChartSeries>[
                         LineSeries<List<double>, DateTime>(
                           dataSource: coinsVM.graphData!.prices,
+                          color: lineColor(),
                           xValueMapper: (List<double> data, _) =>
                               DateTime.fromMillisecondsSinceEpoch(
                                   data[0].toInt()),
                           yValueMapper: (List<double> data, _) => data[1],
                         ),
                         AreaSeries<List<double>, DateTime>(
-                            dataSource: coinsVM.graphData!.prices,
-                            xValueMapper: (List<double> data, _) =>
-                                DateTime.fromMillisecondsSinceEpoch(
-                                    data[0].toInt()),
-                            yValueMapper: (List<double> data, _) => data[1],
-                            gradient: LinearGradient(
-                                colors: [
-                                  Colors.blue.withOpacity(0.5),
-                                  Colors.blue.withOpacity(0.0),
-                                ],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter))
+                          dataSource: coinsVM.graphData!.prices,
+                          xValueMapper: (List<double> data, _) =>
+                              DateTime.fromMillisecondsSinceEpoch(
+                                  data[0].toInt()),
+                          yValueMapper: (List<double> data, _) => data[1],
+                          gradient: areaGradient(),
+                        ),
                       ],
                     ),
                   ),
@@ -298,6 +322,9 @@ class CoinDetailScreen extends StatelessWidget {
           );
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text(name ?? "Loading..."),
+      ),
       body: coinsVM.isLoading
           ? Center(child: CircularProgressIndicator())
           : Column(
