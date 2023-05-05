@@ -1,6 +1,8 @@
 import 'package:block_folio/models/coin_detail.dart';
 import 'package:block_folio/models/user_model.dart';
+import 'package:block_folio/view_models/auth_viewmodel.dart';
 import 'package:block_folio/view_models/coins_viewmodel.dart';
+import 'package:block_folio/view_models/portfolio_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,15 +12,20 @@ class PurchaseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final coinsVM = Provider.of<CoinsViewModel>(context, listen: true);
+    final portfolioVM = Provider.of<PortfolioViewModel>(context, listen: true);
+    final loginVM = Provider.of<LoginViewModel>(context, listen: true);
     if (coinsVM.currentCoin == null) {
       Navigator.pop(context);
     }
     final coinDetail = coinsVM.currentCoin!;
+    final currentPrice =
+        coinDetail.marketData?.currentPrice?['usd']?.toDouble() ?? 0.0;
     final purchasedCoin = PurchasedCoin(
-        purchaseDate: DateTime.now(),
-        coinId: coinDetail.id,
-        purchasePrice:
-            coinDetail.marketData?.currentPrice?['usd']?.toDouble() ?? 0.0);
+      purchaseDate: DateTime.now(),
+      coinId: coinDetail.id,
+      quantity: 0,
+      purchasePrice: currentPrice,
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -64,7 +71,8 @@ class PurchaseScreen extends StatelessWidget {
                 labelText: 'Enter ammont',
               ),
               onChanged: (value) {
-                purchasedCoin.purchasePrice = double.parse(value);
+                final val = double.tryParse(value);
+                purchasedCoin.quantity = (val ?? 0.0) / currentPrice;
               },
               keyboardType: TextInputType.number,
             ),
@@ -73,7 +81,15 @@ class PurchaseScreen extends StatelessWidget {
                 Expanded(
                   child: FilledButton(
                     child: Text("Purchase"),
-                    onPressed: () {},
+                    onPressed: () {
+                      if (loginVM.currentUser == null) {
+                        Navigator.pushNamed(context, '/profile');
+                        return;
+                      }
+                      purchasedCoin.purchasePrice = currentPrice;
+                      portfolioVM.purchaseCoins(
+                          purchasedCoin, loginVM.currentUser!.id ?? "none");
+                    },
                   ),
                 ),
               ],

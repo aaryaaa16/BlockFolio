@@ -5,6 +5,7 @@ import 'package:block_folio/screens/registration_page.dart';
 import 'package:block_folio/themes/color_scheme.dart';
 import 'package:block_folio/view_models/auth_viewmodel.dart';
 import 'package:block_folio/view_models/coins_viewmodel.dart';
+import 'package:block_folio/view_models/portfolio_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,6 +30,8 @@ class BlockfolioApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<CoinsViewModel>(create: (_) => CoinsViewModel()),
         ChangeNotifierProvider<LoginViewModel>(create: (_) => LoginViewModel()),
+        ChangeNotifierProvider<PortfolioViewModel>(
+            create: (_) => PortfolioViewModel()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -46,7 +49,7 @@ class BlockfolioApp extends StatelessWidget {
           '/profile': (context) => const ProfileScreen(),
           '/register': (context) => const RegistrationScreen(),
           '/coinInfo': (context) => CoinDetailScreen(),
-          '/purchaseCoin':(context) => PurchaseScreen(),
+          '/purchaseCoin': (context) => PurchaseScreen(),
         },
         initialRoute: '/',
       ),

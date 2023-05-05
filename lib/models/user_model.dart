@@ -40,11 +40,13 @@ class UserEntity {
 class PurchasedCoin {
   DateTime? purchaseDate;
   double? purchasePrice;
+  double? quantity;
   String? coinId;
 
   PurchasedCoin({
     this.purchaseDate,
     this.purchasePrice,
+    this.quantity,
     this.coinId,
   });
 
@@ -57,6 +59,7 @@ class PurchasedCoin {
     return PurchasedCoin(
       purchaseDate: data?['purchaseDate']?.toDate(),
       purchasePrice: data?['purchasePrice'],
+      quantity: data?['quantity'],
       coinId: data?['coinId'],
     );
   }
@@ -65,6 +68,7 @@ class PurchasedCoin {
     return {
       if (purchaseDate != null) 'purchaseDate': purchaseDate,
       if (purchasePrice != null) 'purchasePrice': purchasePrice,
+      if (quantity != null) 'quantity': quantity,
       if (coinId != null) 'coinId': coinId,
     };
   }

@@ -1,4 +1,5 @@
 import 'package:block_folio/view_models/auth_viewmodel.dart';
+import 'package:block_folio/view_models/portfolio_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,6 +9,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginVM = Provider.of<LoginViewModel>(context);
+    final portfolioVM = Provider.of<PortfolioViewModel>(context);
 
     Widget loginUI() => Stack(
           children: [
@@ -92,73 +94,76 @@ class ProfileScreen extends StatelessWidget {
           ],
         );
 
-    Widget profileUI() => SingleChildScrollView(
-          child: Column(
-            children: [
-              Card(
-                margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
-                child: Container(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Icon(
-                        Icons.account_circle,
-                        size: 144,
-                      ),
-                      Text(
-                        loginVM.currentUser?.name ?? "No Name",
-                        style: Theme.of(context).textTheme.displaySmall,
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
+    Widget profileUI() {
+      portfolioVM.getPortfolio(loginVM.currentUser?.id ?? "");
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            Card(
+              margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Icon(
+                      Icons.account_circle,
+                      size: 144,
+                    ),
+                    Text(
+                      loginVM.currentUser?.name ?? "No Name",
+                      style: Theme.of(context).textTheme.displaySmall,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 8.0),
-                child: Divider(),
-              ),
-              Card(
-                margin: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
-                child: Container(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.phone,
-                      ),
-                      const SizedBox(width: 16.0),
-                      Text(
-                        loginVM.currentUser?.phoneNumber ?? "No Phone Number",
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                    ],
-                  ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 8.0),
+              child: Divider(),
+            ),
+            Card(
+              margin: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.phone,
+                    ),
+                    const SizedBox(width: 16.0),
+                    Text(
+                      loginVM.currentUser?.phoneNumber ?? "No Phone Number",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  ],
                 ),
               ),
-              Card(
-                margin: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
-                child: Container(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.email,
-                      ),
-                      const SizedBox(width: 10.0),
-                      Text(
-                        loginVM.currentUser?.email ?? "No Email",
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                    ],
-                  ),
+            ),
+            Card(
+              margin: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.email,
+                    ),
+                    const SizedBox(width: 10.0),
+                    Text(
+                      loginVM.currentUser?.email ?? "No Email",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        );
+            ),
+          ],
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(

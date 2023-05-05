@@ -211,74 +211,6 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
           child: Padding(
               padding: EdgeInsets.all(16.0),
               child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Container(
-                  padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                  width: double.infinity,
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('24H L'),
-                          Text(
-                            low24!
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('24H H'),
-                          Text(
-                              high24!
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Total Volume'),
-                          Text(
-                              totalVolume!
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Markey Cap'),
-                          Text(
-                              marketCap!
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Liquidity Score'),
-                          Text(
-                              liquidityScore!
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Community Score'),
-                          Text(
-                              communityScore!
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
                 scrollDirection: Axis.horizontal,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -332,8 +264,8 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
                       ],
                     ),
                   ],
->>>>>>> 67fe6e6e75ffef30182fc19b34063377bbe94bdc
                 ),
+              )),
         );
 
     Widget volumesChart() => coinsVM.graphData == null
