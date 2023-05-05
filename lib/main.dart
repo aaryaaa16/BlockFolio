@@ -1,5 +1,6 @@
 import 'package:block_folio/screens/coin_detail_screen.dart';
 import 'package:block_folio/screens/home_page.dart';
+import 'package:block_folio/screens/purchase_screen.dart';
 import 'package:block_folio/screens/registration_page.dart';
 import 'package:block_folio/themes/color_scheme.dart';
 import 'package:block_folio/view_models/auth_viewmodel.dart';
@@ -45,6 +46,7 @@ class BlockfolioApp extends StatelessWidget {
           '/profile': (context) => const ProfileScreen(),
           '/register': (context) => const RegistrationScreen(),
           '/coinInfo': (context) => CoinDetailScreen(),
+          '/purchaseCoin':(context) => PurchaseScreen(),
         },
         initialRoute: '/',
       ),
