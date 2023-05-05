@@ -64,21 +64,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: Text("Find a Bus"),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.pushNamed(context, "/routes");
-              },
-            ),
-            ListTile(
-              title: Text("Make a Payment"),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.pushNamed(context, "/payment");
-              },
-            ),
-            ListTile(
-              title: Text("Travel History"),
+              title: Text("View Portfolio"),
               onTap: () {
                 Navigator.of(context).pop();
                 Navigator.pushNamed(context, "/history");
@@ -97,7 +83,6 @@ class HomePage extends StatelessWidget {
                   child: Row(
                     children: [
                       Container(
-                        padding: EdgeInsets.only(left: 4),
                         margin: EdgeInsets.all(8.0),
                         width: 48,
                         child: Text(

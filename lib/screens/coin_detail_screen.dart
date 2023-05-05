@@ -67,7 +67,7 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
       } else {
         double change = finalPrice - initialPrice;
         double percentage = (change / initialPrice) * 100;
-        return percentage.toStringAsFixed(2);
+        return percentage.toStringAsFixed(2) + "%";
       }
     }
 
@@ -159,9 +159,21 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
                           children: [
                             Text(
                               getChange(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                    color: lineColor(),
+                                  ),
                             ),
                             Text(
                               getChangePercentage(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    color: lineColor(),
+                                  ),
                             ),
                           ],
                         ),
@@ -200,50 +212,89 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
               padding: EdgeInsets.all(16.0),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Row(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Row(
                       children: [
-                        Row(
-                          children: [Text('24H L'), Text(low24!)],
-                        ),
-                        Row(
-                          children: [Text('24H H'), Text(high24!)],
+                        Text('24H L'),
+                        Text(
+                          low24!,
+                          textAlign: TextAlign.end,
                         )
                       ],
                     ),
+<<<<<<< HEAD
 
                     Column(
+=======
+                    Row(
+>>>>>>> 1887d7710be0c1da4a9afa18b2a7ea862dee3c4f
                       children: [
-                        Row(
-                          children: [Text('Total Volume'), Text(totalVolume!)],
-                        ),
-                        Row(
-                          children: [Text('Market Cap'), Text(marketCap!)],
+                        Text('24H H'),
+                        Text(
+                          high24!,
+                          textAlign: TextAlign.end,
                         )
                       ],
                     ),
-                    Column(
+                    Row(
                       children: [
-                        Row(
-                          children: [
-                            Text('Liquidity Score'),
-                            Text(liquidityScore!)
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Text('Community Score'),
-                            Text(communityScore!)
-                          ],
+                        Text('Total Volume'),
+                        Text(
+                          totalVolume!,
+                          textAlign: TextAlign.end,
                         )
                       ],
-                    )
+                    ),
+                    Row(
+                      children: [
+                        Text('Market Cap'),
+                        Text(
+                          marketCap!,
+                          textAlign: TextAlign.end,
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text('Liquidity Score'),
+                        Text(liquidityScore!)
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text('Community Score'),
+                        Text(communityScore!)
+                      ],
+                    ),
                   ],
                 ),
               )),
         );
+
+    Widget volumesChart() => coinsVM.graphData == null
+        ? Text("No Graph Data")
+        : Container(
+            padding: EdgeInsets.only(left: 48),
+            height: 50,
+            child: SfCartesianChart(
+              plotAreaBorderWidth: 0,
+              primaryXAxis: DateTimeAxis(
+                intervalType: DateTimeIntervalType.auto,
+                isVisible: false,
+              ),
+              primaryYAxis: NumericAxis(isVisible: false),
+              series: <ChartSeries>[
+                ColumnSeries<List<double>, DateTime>(
+                  dataSource: coinsVM.graphData!.totalVolumes,
+                  xValueMapper: (List<double> data, _) =>
+                      DateTime.fromMillisecondsSinceEpoch(data[0].toInt()),
+                  yValueMapper: (List<double> data, _) => data[1],
+                ),
+              ],
+            ),
+          );
 
     Widget graph() => coinsVM.graphData == null
         ? Text("No graph data")
@@ -251,43 +302,47 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
             children: [
               Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text("Duration: "),
-                      MenuAnchor(
-                        menuChildren: rangeOptions
-                            .map(
-                              (e) => RadioMenuButton<String>(
-                                value: e[0],
-                                groupValue: coinsVM.selectedRange,
-                                onChanged: coinsVM.setRange,
-                                child: Text(e[1]),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text("Duration: "),
+                        MenuAnchor(
+                          menuChildren: rangeOptions
+                              .map(
+                                (e) => RadioMenuButton<String>(
+                                  value: e[0],
+                                  groupValue: coinsVM.selectedRange,
+                                  onChanged: coinsVM.setRange,
+                                  child: Text(e[1]),
+                                ),
+                              )
+                              .toList(),
+                          builder: (context, controller, child) {
+                            return TextButton(
+                              child: Row(
+                                children: [
+                                  Text(coinsVM.selectedRange),
+                                  Icon(Icons.arrow_drop_down)
+                                ],
                               ),
-                            )
-                            .toList(),
-                        builder: (context, controller, child) {
-                          return TextButton(
-                            child: Row(
-                              children: [
-                                Text(coinsVM.selectedRange),
-                                Icon(Icons.arrow_drop_down)
-                              ],
-                            ),
-                            onPressed: () {
-                              if (controller.isOpen) {
-                                controller.close();
-                              } else {
-                                controller.open();
-                              }
-                            },
-                          );
-                        },
-                      )
-                    ],
+                              onPressed: () {
+                                if (controller.isOpen) {
+                                  controller.close();
+                                } else {
+                                  controller.open();
+                                }
+                              },
+                            );
+                          },
+                        )
+                      ],
+                    ),
                   ),
                   Container(
                     height: 300,
+<<<<<<< HEAD
                     child: Stack(
                       children: [
                         SfCartesianChart(
@@ -305,6 +360,22 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
                               yValueMapper: (List<double> data, _) => data[1],
                             ),
                           ],
+=======
+                    child: SfCartesianChart(
+                      primaryXAxis: DateTimeAxis(
+                        intervalType: DateTimeIntervalType.auto,
+                      ),
+                      zoomPanBehavior: ZoomPanBehavior(
+                          enablePinching: true, enablePanning: true),
+                      series: <ChartSeries>[
+                        LineSeries<List<double>, DateTime>(
+                          dataSource: coinsVM.graphData!.prices,
+                          color: lineColor(),
+                          xValueMapper: (List<double> data, _) =>
+                              DateTime.fromMillisecondsSinceEpoch(
+                                  data[0].toInt()),
+                          yValueMapper: (List<double> data, _) => data[1],
+>>>>>>> 1887d7710be0c1da4a9afa18b2a7ea862dee3c4f
                         ),
                         SfCartesianChart(
                           trackballBehavior: _trackballBehavior,
@@ -334,10 +405,23 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
       appBar: AppBar(
         title: Text(name ?? "Loading..."),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.shopping_cart_rounded),
+      ),
       body: coinsVM.isLoading
           ? Center(child: CircularProgressIndicator())
           : Column(
-              children: [header(), graph(), footer()],
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                header(),
+                graph(),
+                volumesChart(),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: footer(),
+                )
+              ],
             ),
     );
   }
