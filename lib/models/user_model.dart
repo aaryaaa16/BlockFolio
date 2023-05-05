@@ -36,3 +36,36 @@ class UserEntity {
     };
   }
 }
+
+class PurchasedCoin {
+  DateTime? purchaseDate;
+  double? purchasePrice;
+  String? coinId;
+
+  PurchasedCoin({
+    this.purchaseDate,
+    this.purchasePrice,
+    this.coinId,
+  });
+
+  factory PurchasedCoin.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
+
+    return PurchasedCoin(
+      purchaseDate: data?['purchaseDate']?.toDate(),
+      purchasePrice: data?['purchasePrice'],
+      coinId: data?['coinId'],
+    );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      if (purchaseDate != null) 'purchaseDate': purchaseDate,
+      if (purchasePrice != null) 'purchasePrice': purchasePrice,
+      if (coinId != null) 'coinId': coinId,
+    };
+  }
+}
