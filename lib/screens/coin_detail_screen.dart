@@ -211,66 +211,130 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
           child: Padding(
               padding: EdgeInsets.all(16.0),
               child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text('24H L'),
-                        Text(
-                          low24!,
-                          textAlign: TextAlign.end,
-                        )
-                      ],
-                    ),
-<<<<<<< HEAD
-
-                    Column(
-=======
-                    Row(
->>>>>>> 1887d7710be0c1da4a9afa18b2a7ea862dee3c4f
-                      children: [
-                        Text('24H H'),
-                        Text(
-                          high24!,
-                          textAlign: TextAlign.end,
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('Total Volume'),
-                        Text(
-                          totalVolume!,
-                          textAlign: TextAlign.end,
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('Market Cap'),
-                        Text(
-                          marketCap!,
-                          textAlign: TextAlign.end,
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('Liquidity Score'),
-                        Text(liquidityScore!)
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('Community Score'),
-                        Text(communityScore!)
-                      ],
-                    ),
-                  ],
+                scrollDirection: Axis.vertical,
+                child: Container(
+                  padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                  width: double.infinity,
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('24H L'),
+                          Text(
+                            low24!
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('24H H'),
+                          Text(
+                              high24!
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Total Volume'),
+                          Text(
+                              totalVolume!
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Markey Cap'),
+                          Text(
+                              marketCap!
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Liquidity Score'),
+                          Text(
+                              liquidityScore!
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Community Score'),
+                          Text(
+                              communityScore!
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-              )),
+                // child: Column(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   children: [
+                //     Row(
+                //       children: [
+                //         Text('24H L'),
+                //         Text(
+                //           low24!,
+                //           textAlign: TextAlign.end,
+                //         )
+                //       ],
+                //     ),
+                //
+                //     Row(
+                //       children: [
+                //         Text('24H H'),
+                //         Text(
+                //           high24!,
+                //           textAlign: TextAlign.end,
+                //         )
+                //       ],
+                //     ),
+                //     Row(
+                //       children: [
+                //         Text('Total Volume'),
+                //         Text(
+                //           totalVolume!,
+                //           textAlign: TextAlign.end,
+                //         )
+                //       ],
+                //     ),
+                //     Row(
+                //       children: [
+                //         Text('Market Cap'),
+                //         Text(
+                //           marketCap!,
+                //           textAlign: TextAlign.end,
+                //         )
+                //       ],
+                //     ),
+                //     Row(
+                //       children: [
+                //         Text('Liquidity Score'),
+                //         Text(liquidityScore!)
+                //       ],
+                //     ),
+                //     Row(
+                //       children: [
+                //         Text('Community Score'),
+                //         Text(communityScore!)
+                //       ],
+                //     ),
+                //   ],
+                // ),
+              )
+                ),
         );
 
     Widget volumesChart() => coinsVM.graphData == null
@@ -342,7 +406,6 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
                   ),
                   Container(
                     height: 300,
-<<<<<<< HEAD
                     child: Stack(
                       children: [
                         SfCartesianChart(
@@ -360,22 +423,6 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
                               yValueMapper: (List<double> data, _) => data[1],
                             ),
                           ],
-=======
-                    child: SfCartesianChart(
-                      primaryXAxis: DateTimeAxis(
-                        intervalType: DateTimeIntervalType.auto,
-                      ),
-                      zoomPanBehavior: ZoomPanBehavior(
-                          enablePinching: true, enablePanning: true),
-                      series: <ChartSeries>[
-                        LineSeries<List<double>, DateTime>(
-                          dataSource: coinsVM.graphData!.prices,
-                          color: lineColor(),
-                          xValueMapper: (List<double> data, _) =>
-                              DateTime.fromMillisecondsSinceEpoch(
-                                  data[0].toInt()),
-                          yValueMapper: (List<double> data, _) => data[1],
->>>>>>> 1887d7710be0c1da4a9afa18b2a7ea862dee3c4f
                         ),
                         SfCartesianChart(
                           trackballBehavior: _trackballBehavior,
