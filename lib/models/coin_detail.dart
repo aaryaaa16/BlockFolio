@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final coinDetail = coinDetailFromJson(jsonString);
-
 import 'dart:convert';
 
 class CoinDetail {
@@ -16,7 +12,7 @@ class CoinDetail {
     List<dynamic>? additionalNotices;
     Description? description;
     Links? links;
-    Image? image;
+    ImageLnks? image;
     String? countryOrigin;
     DateTime? genesisDate;
     num? sentimentVotesUpPercentage;
@@ -65,8 +61,6 @@ class CoinDetail {
 
     factory CoinDetail.fromRawJson(String str) => CoinDetail.fromJson(json.decode(str));
 
-    String toRawJson() => json.encode(toJson());
-
     factory CoinDetail.fromJson(Map<String, dynamic> json) => CoinDetail(
         id: json["id"],
         symbol: json["symbol"],
@@ -79,7 +73,7 @@ class CoinDetail {
         additionalNotices: json["additional_notices"] == null ? [] : List<dynamic>.from(json["additional_notices"]!.map((x) => x)),
         description: json["description"] == null ? null : Description.fromJson(json["description"]),
         links: json["links"] == null ? null : Links.fromJson(json["links"]),
-        image: json["image"] == null ? null : Image.fromJson(json["image"]),
+        image: json["image"] == null ? null : ImageLnks.fromJson(json["image"]),
         countryOrigin: json["country_origin"],
         genesisDate: json["genesis_date"] == null ? null : DateTime.parse(json["genesis_date"]),
         sentimentVotesUpPercentage: json["sentiment_votes_up_percentage"],
@@ -96,36 +90,6 @@ class CoinDetail {
         statusUpdates: json["status_updates"] == null ? [] : List<dynamic>.from(json["status_updates"]!.map((x) => x)),
         lastUpdated: json["last_updated"] == null ? null : DateTime.parse(json["last_updated"]),
     );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "symbol": symbol,
-        "name": name,
-        "asset_platform_id": assetPlatformId,
-        "block_time_in_minutes": blockTimeInMinutes,
-        "hashing_algorithm": hashingAlgorithm,
-        "categories": categories == null ? [] : List<dynamic>.from(categories!.map((x) => x)),
-        "public_notice": publicNotice,
-        "additional_notices": additionalNotices == null ? [] : List<dynamic>.from(additionalNotices!.map((x) => x)),
-        "description": description?.toJson(),
-        "links": links?.toJson(),
-        "image": image?.toJson(),
-        "country_origin": countryOrigin,
-        "genesis_date": "${genesisDate!.year.toString().padLeft(4, '0')}-${genesisDate!.month.toString().padLeft(2, '0')}-${genesisDate!.day.toString().padLeft(2, '0')}",
-        "sentiment_votes_up_percentage": sentimentVotesUpPercentage,
-        "sentiment_votes_down_percentage": sentimentVotesDownPercentage,
-        "watchlist_portfolio_users": watchlistPortfolioUsers,
-        "market_cap_rank": marketCapRank,
-        "coingecko_rank": coingeckoRank,
-        "coingecko_score": coingeckoScore,
-        "developer_score": developerScore,
-        "community_score": communityScore,
-        "liquidity_score": liquidityScore,
-        "public_numerest_score": publicnumerestScore,
-        "market_data": marketData?.toJson(),
-        "status_updates": statusUpdates == null ? [] : List<dynamic>.from(statusUpdates!.map((x) => x)),
-        "last_updated": lastUpdated?.toIso8601String(),
-    };
 
     static CoinDetail testCoin = CoinDetail.fromJson({
     "id": "bitcoin",
@@ -1713,22 +1677,22 @@ class Description {
     };
 }
 
-class Image {
+class ImageLnks {
     String? thumb;
     String? small;
     String? large;
 
-    Image({
+    ImageLnks({
         this.thumb,
         this.small,
         this.large,
     });
 
-    factory Image.fromRawJson(String str) => Image.fromJson(json.decode(str));
+    factory ImageLnks.fromRawJson(String str) => ImageLnks.fromJson(json.decode(str));
 
     String toRawJson() => json.encode(toJson());
 
-    factory Image.fromJson(Map<String, dynamic> json) => Image(
+    factory ImageLnks.fromJson(Map<String, dynamic> json) => ImageLnks(
         thumb: json["thumb"],
         small: json["small"],
         large: json["large"],

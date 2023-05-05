@@ -1,5 +1,3 @@
-import 'package:block_folio/models/coin_detail.dart';
-import 'package:block_folio/screens/coin_detail_screen.dart';
 import 'package:block_folio/screens/coin_detail_screen.dart';
 import 'package:block_folio/screens/home_page.dart';
 import 'package:block_folio/screens/registration_page.dart';
