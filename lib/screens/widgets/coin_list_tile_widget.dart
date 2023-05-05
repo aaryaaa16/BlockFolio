@@ -17,6 +17,7 @@ class CoinListTile extends StatelessWidget {
     final coinsVM = Provider.of<CoinsViewModel>(context, listen: false);
     return Column(
       children: [
+        
         InkWell(
           onTap: () async {
             await coinsVM.viewDetail(context, coin.id);

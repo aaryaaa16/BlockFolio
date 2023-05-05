@@ -100,6 +100,30 @@ class _HomePageState extends State<HomePage> {
       body: CustomScrollView(
         controller: scrollController,
         slivers: [
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(12, 4, 12, 8),
+              child: SizedBox(
+                height: 50,
+                child: TextField(
+                  onChanged: (str) {
+                    coinsVM.searchQuery = str;
+                  },
+                  onTapOutside: (event) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                  enableSuggestions: true,
+                  cursorWidth: 1.4,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8))),
+                    labelText: 'Search',
+                    suffixIcon: Icon(Icons.search),
+                  ),
+                ),
+              ),
+            ),
+          ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
