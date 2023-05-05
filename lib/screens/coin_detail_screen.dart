@@ -4,7 +4,6 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../view_models/coins_viewmodel.dart';
 
 class CoinDetailScreen extends StatefulWidget {
-class CoinDetailScreen extends StatefulWidget {
   CoinDetailScreen({super.key});
 
   @override
@@ -17,7 +16,7 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
   @override
   void initState() {
     _trackballBehavior = TrackballBehavior(
-        enable: true,
+      enable: true,
       activationMode: ActivationMode.singleTap,
     );
     super.initState();
@@ -299,19 +298,11 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
               Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "Duration: ",
-                          style:
-                              Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimaryContainer,
-                                  ),
-                        ),
+                        const Text("Duration: "),
                         MenuAnchor(
                           menuChildren: rangeOptions
                               .map(
@@ -324,26 +315,12 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
                               )
                               .toList(),
                           builder: (context, controller, child) {
-                            return OutlinedButton(
-                              child: Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      coinsVM.selectedRange,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            // fontWeight: FontWeight.bold,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onPrimaryContainer,
-                                          ),
-                                    ),
-                                    Icon(Icons.arrow_drop_down)
-                                  ],
-                                ),
+                            return TextButton(
+                              child: Row(
+                                children: [
+                                  Text(coinsVM.selectedRange),
+                                  Icon(Icons.arrow_drop_down)
+                                ],
                               ),
                               onPressed: () {
                                 if (controller.isOpen) {
@@ -408,7 +385,9 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
         title: Text(name ?? "Loading..."),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/purchaseCoin');
+        },
         child: Icon(Icons.shopping_cart_rounded),
       ),
       body: coinsVM.isLoading
