@@ -10,15 +10,14 @@ class CoinDetailScreen extends StatelessWidget {
 
   get rangeOptions => null;
 
-  
-    // _launchURLBrowser() async {
-    //   var url = website;
-    //   if (await canLaunch(url!)) {
-    //     await launch(url);
-    //   } else {
-    //     throw 'Could not launch $url';
-    //   }
-    // }
+  // _launchURLBrowser() async {
+  //   var url = website;
+  //   if (await canLaunch(url!)) {
+  //     await launch(url);
+  //   } else {
+  //     throw 'Could not launch $url';
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -41,16 +40,16 @@ class CoinDetailScreen extends StatelessWidget {
     String? marketCap =
         coinsVM.currentCoin?.marketData?.marketCap!['usd']?.toString();
     String? website = coinsVM.currentCoin?.links?.homepage![0]?.toString();
-    
-    _launchURLApp() async {
-    var url = website;
-    if (await canLaunch(url!)) {
-      await launch(url, forceSafariVC: true, forceWebView: true);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
+    String? imageURL = coinsVM.currentCoin?.image?.thumb?.toString();
 
+    _launchURLApp() async {
+      var url = website;
+      if (await canLaunch(url!)) {
+        await launch(url, forceSafariVC: true, forceWebView: true);
+      } else {
+        throw 'Could not launch $url';
+      }
+    }
 
     List<List<double>> prices = [
       [1682967657190, 28171.60655909179],
@@ -140,18 +139,21 @@ class CoinDetailScreen extends StatelessWidget {
     ];
 
     Widget header() => Container(
-          height: 250,
-          width: 400,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(12.0, 60.0, 8.0, 8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  name!,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimaryContainer,
-                      ),
+                Row(
+                  children: [
+                    Image.network(imageURL!),
+                    Text(
+                      name!,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimaryContainer,
+                          ),
+                    ),
+                  ],
                 ),
                 Text(
                   symbol!,
@@ -183,8 +185,6 @@ class CoinDetailScreen extends StatelessWidget {
           ),
         );
     Widget footer() => Container(
-          height: 300,
-          width: 400,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 20, 8.0, 12),
             child: Column(
@@ -244,7 +244,12 @@ class CoinDetailScreen extends StatelessWidget {
                             .toList(),
                         builder: (context, controller, child) {
                           return TextButton(
-                            child: Text(coinsVM.selectedRange),
+                            child: Row(
+                              children: [
+                                Text(coinsVM.selectedRange),
+                                Icon(Icons.arrow_drop_down)
+                              ],
+                            ),
                             onPressed: () {
                               if (controller.isOpen) {
                                 controller.close();
