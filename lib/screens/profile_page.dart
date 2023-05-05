@@ -121,7 +121,7 @@ class ProfileScreen extends StatelessWidget {
                 child: Divider(),
               ),
               Card(
-                margin: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+                margin: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
                 child: Container(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
@@ -139,7 +139,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               Card(
-                margin: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+                margin: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
                 child: Container(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
@@ -147,7 +147,7 @@ class ProfileScreen extends StatelessWidget {
                       Icon(
                         Icons.email,
                       ),
-                      const SizedBox(width: 16.0),
+                      const SizedBox(width: 10.0),
                       Text(
                         loginVM.currentUser?.email ?? "No Email",
                         style: Theme.of(context).textTheme.titleLarge,

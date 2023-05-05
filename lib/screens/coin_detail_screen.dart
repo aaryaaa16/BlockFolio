@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:block_folio/models/coin_detail.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
-import '../models/coin.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../view_models/coins_viewmodel.dart';
+import 'package:url_launcher/link.dart';
 
 class CoinDetailScreen extends StatelessWidget {
   CoinDetailScreen({super.key});
-  
+
   get rangeOptions => null;
+
+  
+    // _launchURLBrowser() async {
+    //   var url = website;
+    //   if (await canLaunch(url!)) {
+    //     await launch(url);
+    //   } else {
+    //     throw 'Could not launch $url';
+    //   }
+    // }
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +40,17 @@ class CoinDetailScreen extends StatelessWidget {
     String? low24 = coinsVM.currentCoin?.marketData?.low24H!['usd']?.toString();
     String? marketCap =
         coinsVM.currentCoin?.marketData?.marketCap!['usd']?.toString();
+    String? website = coinsVM.currentCoin?.links?.homepage![0]?.toString();
+    
+    _launchURLApp() async {
+    var url = website;
+    if (await canLaunch(url!)) {
+      await launch(url, forceSafariVC: true, forceWebView: true);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
 
     List<List<double>> prices = [
       [1682967657190, 28171.60655909179],
@@ -120,7 +140,7 @@ class CoinDetailScreen extends StatelessWidget {
     ];
 
     Widget header() => Container(
-          height: 200,
+          height: 250,
           width: 400,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(12.0, 60.0, 8.0, 8.0),
@@ -139,6 +159,16 @@ class CoinDetailScreen extends StatelessWidget {
                         color: Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                 ),
+                TextButton(
+                    onPressed: _launchURLApp,
+                    child: Text(
+                      website!,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
+                          ),
+                    )),
                 Divider(
                   height: 20,
                 ),
@@ -153,7 +183,7 @@ class CoinDetailScreen extends StatelessWidget {
           ),
         );
     Widget footer() => Container(
-          height: 390,
+          height: 300,
           width: 400,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 20, 8.0, 12),
