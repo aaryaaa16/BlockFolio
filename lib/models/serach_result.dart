@@ -1,29 +1,59 @@
 import 'dart:convert';
 
 class SearchResult {
-    List<List<double>>? prices;
-    List<List<double>>? marketCaps;
-    List<List<double>>? totalVolumes;
+    List<CoinSearchResult>? coins;
 
     SearchResult({
-        this.prices,
-        this.marketCaps,
-        this.totalVolumes,
+        this.coins,
     });
 
     factory SearchResult.fromRawJson(String str) => SearchResult.fromJson(json.decode(str));
 
+    factory SearchResult.fromJson(Map<String, dynamic> json) => SearchResult(
+        coins: json["coins"] == null ? [] : List<CoinSearchResult>.from(json["coins"]!.map((x) => CoinSearchResult.fromJson(x))),
+    );
+}
+
+class CoinSearchResult {
+    String? id;
+    String? name;
+    String? apiSymbol;
+    String? symbol;
+    int? marketCapRank;
+    String? thumb;
+    String? large;
+
+    CoinSearchResult({
+        this.id,
+        this.name,
+        this.apiSymbol,
+        this.symbol,
+        this.marketCapRank,
+        this.thumb,
+        this.large,
+    });
+
+    factory CoinSearchResult.fromRawJson(String str) => CoinSearchResult.fromJson(json.decode(str));
+
     String toRawJson() => json.encode(toJson());
 
-    factory SearchResult.fromJson(Map<String, dynamic> json) => SearchResult(
-        prices: json["prices"] == null ? [] : List<List<double>>.from(json["prices"]!.map((x) => List<double>.from(x.map((x) => x?.toDouble())))),
-        marketCaps: json["market_caps"] == null ? [] : List<List<double>>.from(json["market_caps"]!.map((x) => List<double>.from(x.map((x) => x?.toDouble())))),
-        totalVolumes: json["total_volumes"] == null ? [] : List<List<double>>.from(json["total_volumes"]!.map((x) => List<double>.from(x.map((x) => x?.toDouble())))),
+    factory CoinSearchResult.fromJson(Map<String, dynamic> json) => CoinSearchResult(
+        id: json["id"],
+        name: json["name"],
+        apiSymbol: json["api_symbol"],
+        symbol: json["symbol"],
+        marketCapRank: json["market_cap_rank"],
+        thumb: json["thumb"],
+        large: json["large"],
     );
 
     Map<String, dynamic> toJson() => {
-        "prices": prices == null ? [] : List<dynamic>.from(prices!.map((x) => List<dynamic>.from(x.map((x) => x)))),
-        "market_caps": marketCaps == null ? [] : List<dynamic>.from(marketCaps!.map((x) => List<dynamic>.from(x.map((x) => x)))),
-        "total_volumes": totalVolumes == null ? [] : List<dynamic>.from(totalVolumes!.map((x) => List<dynamic>.from(x.map((x) => x)))),
+        "id": id,
+        "name": name,
+        "api_symbol": apiSymbol,
+        "symbol": symbol,
+        "market_cap_rank": marketCapRank,
+        "thumb": thumb,
+        "large": large,
     };
 }

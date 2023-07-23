@@ -50,6 +50,7 @@ class BlockfolioApp extends StatelessWidget {
           '/register': (context) => const RegistrationScreen(),
           '/coinInfo': (context) => CoinDetailScreen(),
           '/purchaseCoin': (context) => PurchaseScreen(),
+          '/detailView': (context) => Text("detailView"),
         },
         initialRoute: '/',
       ),

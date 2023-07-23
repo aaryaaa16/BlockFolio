@@ -1,6 +1,7 @@
 import 'package:block_folio/models/coin.dart';
 import 'package:block_folio/models/coin_detail.dart';
 import 'package:block_folio/models/graph_data.dart';
+import 'package:block_folio/models/serach_result.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -54,5 +55,17 @@ class CoinGecko {
     var responseData = json.decode(response.body);
     GraphData graphData = GraphData.fromJson(responseData);
     return graphData;
+  }
+
+  Future<SearchResult> getSearchResults(String query) async {
+    String finalURL = baseURL + "search";
+    Map<String, String> queryArguments = {
+      "query": query,
+    };
+    Uri uri = Uri.parse(finalURL).replace(queryParameters: queryArguments);
+    final response =await http.get(uri);
+    var responseData = json.decode(response.body);
+    SearchResult searchResult = SearchResult.fromJson(responseData);
+    return searchResult;
   }
 }

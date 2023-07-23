@@ -1,6 +1,7 @@
 import 'package:block_folio/models/coin.dart';
 import 'package:block_folio/models/coin_detail.dart';
 import 'package:block_folio/models/graph_data.dart';
+import 'package:block_folio/models/serach_result.dart';
 import 'package:block_folio/services/coin_gecko.dart';
 import 'package:flutter/material.dart';
 
@@ -13,12 +14,24 @@ class CoinsViewModel with ChangeNotifier {
   GraphData? graphData;
   String selectedRange = '7';
   String searchQuery = "";
+  List<CoinSearchResult> searchResults = [];
 
   void setRange(String? newRange) async {
     selectedRange = newRange ?? '7';
     notifyListeners();
     graphData = await coinGecko.getCoinGraphData(
         currentCoin?.id ?? "bitcoin", selectedRange);
+    notifyListeners();
+  }
+
+  void updateSearchQuery(String str) {
+    searchQuery = str;
+    notifyListeners();
+  }
+
+  void search() async {
+    SearchResult result = await coinGecko.getSearchResults(searchQuery);
+    searchResults = result.coins ?? [];
     notifyListeners();
   }
 

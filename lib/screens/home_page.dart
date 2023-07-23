@@ -1,3 +1,4 @@
+import 'package:block_folio/models/serach_result.dart';
 import 'package:block_folio/screens/widgets/coin_list_tile_widget.dart';
 import 'package:block_folio/view_models/auth_viewmodel.dart';
 import 'package:block_folio/view_models/coins_viewmodel.dart';
@@ -19,6 +20,37 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     scrollController = ScrollController();
+  }
+
+  Widget searchItemTile(CoinSearchResult coin) {
+    return Row(
+      children: [
+        Image.network(
+          coin.large ?? "",
+          width: 48,
+          height: 48,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 120,
+              child: Text(
+                coin.id ?? "Unknown",
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    ),
+                maxLines: 2,
+              ),
+            ),
+            Text(
+              (coin.symbol ?? "Unknown").toUpperCase(),
+              style: Theme.of(context).textTheme.labelMedium,
+            )
+          ],
+        ),
+      ],
+    );
   }
 
   @override
@@ -106,11 +138,13 @@ class _HomePageState extends State<HomePage> {
               child: SizedBox(
                 height: 50,
                 child: TextField(
-                  onChanged: (str) {
-                    coinsVM.searchQuery = str;
-                  },
+                  onChanged: coinsVM.updateSearchQuery,
                   onTapOutside: (event) {
                     FocusManager.instance.primaryFocus?.unfocus();
+                    coinsVM.search();
+                  },
+                  onSubmitted: (value) {
+                    coinsVM.search();
                   },
                   enableSuggestions: true,
                   cursorWidth: 1.4,
@@ -124,14 +158,24 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return CoinListTile(coin: coinsVM.coins[index]);
-              },
-              childCount: coinsVM.coins.length,
+          if (coinsVM.searchQuery.isEmpty)
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return CoinListTile(coin: coinsVM.coins[index]);
+                },
+                childCount: coinsVM.coins.length,
+              ),
             ),
-          ),
+          if (coinsVM.searchQuery.isNotEmpty)
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return searchItemTile(coinsVM.searchResults[index]);
+                },
+                childCount: coinsVM.searchResults.length,
+              ),
+            ),
           if (coinsVM.isLoading)
             SliverToBoxAdapter(
               child: Container(
